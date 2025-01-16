@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import Markdown from "unplugin-vue-markdown/vite";
 import { tasklist } from "@mdit/plugin-tasklist";
+import { attrs } from "@mdit/plugin-attrs";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 // https://vite.dev/config/
@@ -17,6 +18,7 @@ export default defineConfig({
         md.use(tasklist, {
           disabled: false,
         });
+        md.use(attrs);
       },
     }),
     vueDevTools(),
