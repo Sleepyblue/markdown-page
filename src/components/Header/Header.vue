@@ -1,9 +1,21 @@
 <script setup lang="ts">
+import { defineProps } from 'vue';
 import HeaderMarkdown from "../../docs/HeaderMarkdown.md"
+
+defineProps({
+  showScrollToTop: Boolean,
+});
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+
 </script>
 
 <template>
-  <header>
+  <header ref="header">
+    <button v-if="showScrollToTop" @click="scrollToTop">Scroll to the top</button>
     <div class="theme-buttons">
       <ul>
         <li>
@@ -22,7 +34,6 @@ import HeaderMarkdown from "../../docs/HeaderMarkdown.md"
 
 <style>
 header {
-  position: relative;
   position: sticky;
   top: 0;
   left: 0;
@@ -63,12 +74,18 @@ header {
     list-style: none;
   }
 
+  >button {
+    grid-column: 1 / 2;
+    justify-self: start;
+  }
+
   button {
     background: none;
     border: none;
     font-size: 1.6rem;
     color: var(--paper-text);
     cursor: pointer;
+    padding: 0;
   }
 
   .theme-buttons {
