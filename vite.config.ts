@@ -5,6 +5,7 @@ import vue from "@vitejs/plugin-vue";
 import Markdown from "unplugin-vue-markdown/vite";
 import { tasklist } from "@mdit/plugin-tasklist";
 import { attrs } from "@mdit/plugin-attrs";
+import { container } from "@mdit/plugin-container";
 import vueDevTools from "vite-plugin-vue-devtools";
 
 // https://vite.dev/config/
@@ -19,6 +20,17 @@ export default defineConfig({
           disabled: false,
         });
         md.use(attrs);
+        md.use(container, {
+          name: "details",
+          marker: ":",
+          openRender: (tokens, idx) => {
+            const title = tokens[idx].info.trim().replace(/^details\s*/, "");
+            return `<details><summary>${title}</summary>\n`;
+          },
+          closeRender: () => {
+            return `</details>\n`;
+          },
+        });
       },
     }),
     vueDevTools(),
