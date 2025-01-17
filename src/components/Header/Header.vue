@@ -23,10 +23,23 @@ import HeaderMarkdown from "../../docs/HeaderMarkdown.md"
 <style>
 header {
   position: relative;
+  position: sticky;
+  top: 0;
+  left: 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   padding: 8px 16px;
   border-bottom: 1px dashed var(--paper-text);
+  background: var(--paper-background);
+  background-image: linear-gradient(45deg,
+      rgba(0, 0, 0, 0.04) 25%,
+      transparent 25%),
+    linear-gradient(-45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%);
+  background-size: 4px 4px;
+  background-position:
+    0 0,
+    2px 2px;
+
 
   &::before,
   &::after {
