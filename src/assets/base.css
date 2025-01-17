@@ -37,7 +37,12 @@
   font-weight: normal;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 body {
+  padding: 0 40px;
   min-height: 100vh;
   color: var(--paper-text);
   background: var(--paper-background);
@@ -56,6 +61,8 @@ body {
     background-color 0.5s;
   line-height: 1.6;
   font-family:
+    "Fira Sans",
+    "Cormorant Garamond",
     Inter,
     -apple-system,
     BlinkMacSystemFont,
@@ -64,7 +71,6 @@ body {
     Oxygen,
     Ubuntu,
     Cantarell,
-    "Fira Sans",
     "Droid Sans",
     "Helvetica Neue",
     sans-serif;
@@ -72,4 +78,13 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: var(--paper-highlight);
+  color: var(--paper-highlighted-text);
+}
+
+a {
+  color: var(--paper-text);
 }
