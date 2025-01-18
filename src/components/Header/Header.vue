@@ -1,21 +1,13 @@
 <script setup lang="ts">
-import { defineProps } from 'vue';
 import HeaderMarkdown from "../../docs/HeaderMarkdown.md"
-
-defineProps({
-  showScrollToTop: Boolean,
-});
-
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
 
 </script>
 
 <template>
   <header ref="header">
-    <button v-if="showScrollToTop" @click="scrollToTop">Scroll to the top</button>
+    <nav>
+      <HeaderMarkdown />
+    </nav>
     <div class="theme-buttons">
       <ul>
         <li>
@@ -26,9 +18,6 @@ const scrollToTop = () => {
         </li>
       </ul>
     </div>
-    <nav>
-      <HeaderMarkdown />
-    </nav>
   </header>
 </template>
 
@@ -37,8 +26,9 @@ header {
   position: sticky;
   top: 0;
   left: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 8px 16px;
   border-bottom: 1px dashed var(--paper-text);
   background: var(--paper-background);
@@ -51,6 +41,9 @@ header {
     0 0,
     2px 2px;
 
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: minmax(max-content, 100px) repeat(2, 1fr);
+  }
 
   &::before,
   &::after {
@@ -71,12 +64,41 @@ header {
   ul {
     display: flex;
     gap: 32px;
+    padding: 0;
     list-style: none;
+
+    @media screen and (max-width: 1024px) {
+      gap: 16px;
+    }
   }
 
-  >button {
-    grid-column: 1 / 2;
-    justify-self: start;
+  button,
+  a {
+    white-space: nowrap;
+  }
+
+  a {
+    position: relative;
+    text-decoration: none;
+  }
+
+  a::after {
+    position: absolute;
+    content: "";
+    background-color: var(--paper-text);
+    height: 1px;
+    width: 0;
+    left: inherit;
+    right: 0;
+    bottom: 0;
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+
+  a:hover::after {
+    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    width: 100%;
+    left: 0;
   }
 
   button {
@@ -86,50 +108,46 @@ header {
     color: var(--paper-text);
     cursor: pointer;
     padding: 0;
-  }
-
-  .theme-buttons {
-    grid-column: 2 / 3;
-    justify-self: center;
-  }
-
-  nav {
-    grid-column: 3 / 4;
-    justify-self: end;
-  }
-
-  li {
     position: relative;
   }
 
-  li::before,
-  li::after {
+
+  button::before,
+  button::after {
     position: absolute;
     font-size: 1.8rem;
-    bottom: -2px;
+    bottom: 0;
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 
   }
 
-  li::before {
+  button::before {
     content: "[";
     left: 0;
   }
 
-  li::after {
+  button::after {
     content: "]";
     right: 0;
   }
 
-  li:hover::before {
+  button:hover::before {
     left: -10px;
     opacity: 1;
+
+    @media screen and (max-width: 1024px) {
+      left: -8px;
+    }
   }
 
-  li:hover::after {
+  button:hover::after {
     right: -10px;
     opacity: 1;
+
+    @media screen and (max-width: 1024px) {
+      right: -8px;
+    }
   }
 }
 </style>
