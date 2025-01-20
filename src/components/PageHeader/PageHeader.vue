@@ -6,10 +6,10 @@
     <div class="theme-buttons">
       <ul>
         <li>
-          <button>Paper Light</button>
+          <button @click="handlePageTheme('light')">Paper Light</button>
         </li>
         <li>
-          <button>Ink Dark</button>
+          <button @click="handlePageTheme('dark')">Ink Dark</button>
         </li>
       </ul>
     </div>
@@ -26,6 +26,16 @@ const props = defineProps<{
 const activeSection = computed(() =>
   props.currentSection?.replace("-section", ""),
 );
+
+const handlePageTheme = (theme: "light" | "dark") => {
+  const htmlElement = document.documentElement;
+  const currentTheme = htmlElement.getAttribute("data-theme");
+
+  if (currentTheme !== theme) {
+    htmlElement.setAttribute("data-theme", theme);
+    console.log(`Theme changed to: ${theme}`);
+  }
+}
 </script>
 
 <style>
@@ -47,6 +57,10 @@ header {
   background-position:
     0 0,
     2px 2px;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+
 
   @media screen and (max-width: 1024px) {
     grid-template-columns: minmax(max-content, 100px) repeat(2, 1fr);

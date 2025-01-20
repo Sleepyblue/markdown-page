@@ -39,6 +39,7 @@ const scrollToTop = () => {
 </script>
 
 <style>
+/* Remove after filling each section appropriately */
 h2,
 section {
   height: 100vh;
