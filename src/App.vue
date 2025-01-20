@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import PageHeader from "./components/Header/PageHeader.vue";
+import PageHeader from "./components/PageHeader/PageHeader.vue";
 import SpotlightSection from "./components/SpotlightSection/SpotLightSection.vue";
 import OutlineSection from "./components/OutlineSection/OutlineSection.vue";
 import CraftSection from "./components/CraftSection/CraftSection.vue";
