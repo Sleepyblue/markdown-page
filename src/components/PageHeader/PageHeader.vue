@@ -33,7 +33,6 @@ const handlePageTheme = (theme: "light" | "dark") => {
 
   if (currentTheme !== theme) {
     htmlElement.setAttribute("data-theme", theme);
-    console.log(`Theme changed to: ${theme}`);
   }
 }
 </script>
@@ -61,9 +60,18 @@ header {
     color 0.5s,
     background-color 0.5s;
 
-
-  @media screen and (max-width: 1024px) {
-    grid-template-columns: minmax(max-content, 100px) repeat(2, 1fr);
+  @media (max-width: 600px) {
+    border-bottom: unset;
+    top: unset;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    border-top: 1px dashed var(--paper-text);
+    margin: 0 auto;
+    justify-content: left;
+    align-items: flex-end;
+    gap: 48px;
   }
 
   &::before,
@@ -72,6 +80,13 @@ header {
     content: "+";
     transform: translateY(50%);
     bottom: 0px;
+
+
+    @media (max-width: 600px) {
+      bottom: unset;
+      top: 0;
+      transform: translateY(-50%);
+    }
   }
 
   &::before {
@@ -90,6 +105,10 @@ header {
 
     @media screen and (max-width: 1024px) {
       gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
     }
   }
 
