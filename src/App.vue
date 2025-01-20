@@ -1,35 +1,49 @@
 <template>
-  <Header />
-  <PageHeader>
+  <PageHeader :current-section="currentSection">
     <HeaderMarkdown />
   </PageHeader>
   <main>
-    <Intro @scroll-past="handleScrollPast" />
-    <button v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">Top</button>
+    <SpotlightSection @scroll-past="handleScrollPast" @visible-section="updateVisibleSection" />
+    <OutlineSection @visible-section="updateVisibleSection" />
+    <CraftSection @visible-section="updateVisibleSection" />
+    <OnDeskSection @visible-section="updateVisibleSection" />
+    <button v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
+      Top
+    </button>
   </main>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Header from "./components/Header/Header.vue";
 import PageHeader from "./components/Header/PageHeader.vue";
-import HeaderMarkdown from "./docs/HeaderMarkdown.md"
-import Intro from "./components/Intro/Intro.vue"
-import IntroMarkdown from "./docs/IntroMarkdown.md"
+import SpotlightSection from "./components/SpotlightSection/SpotLightSection.vue";
+import OutlineSection from "./components/OutlineSection/OutlineSection.vue";
+import CraftSection from "./components/CraftSection/CraftSection.vue";
+import OnDeskSection from "./components/OnDeskSection/OnDeskSection.vue";
+import HeaderMarkdown from "./docs/HeaderMarkdown.md";
 
 const showScrollToTop = ref(false);
+const currentSection = ref<string | null>("");
 
 const handleScrollPast = (show: boolean) => {
   showScrollToTop.value = show;
 };
 
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+const updateVisibleSection = (sectionId: string | null) => {
+  currentSection.value = sectionId;
 };
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 </script>
 
 <style>
+h2,
+section {
+  height: 100vh;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -54,7 +68,6 @@ main {
     bottom: 0;
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-
   }
 
   button::before {
