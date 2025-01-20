@@ -1,5 +1,8 @@
 <template>
   <Header />
+  <PageHeader>
+    <HeaderMarkdown />
+  </PageHeader>
   <main>
     <Intro @scroll-past="handleScrollPast" />
     <button v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">Top</button>
@@ -9,6 +12,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Header from "./components/Header/Header.vue";
+import PageHeader from "./components/Header/PageHeader.vue";
+import HeaderMarkdown from "./docs/HeaderMarkdown.md"
 import Intro from "./components/Intro/Intro.vue"
 import IntroMarkdown from "./docs/IntroMarkdown.md"
 

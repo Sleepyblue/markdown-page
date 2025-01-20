@@ -1,12 +1,7 @@
-<script setup lang="ts">
-import HeaderMarkdown from "../../docs/HeaderMarkdown.md"
-
-</script>
-
 <template>
   <header ref="header">
     <nav>
-      <HeaderMarkdown />
+      <slot />
     </nav>
     <div class="theme-buttons">
       <ul>
@@ -20,6 +15,9 @@ import HeaderMarkdown from "../../docs/HeaderMarkdown.md"
     </div>
   </header>
 </template>
+
+<script setup lang="ts">
+</script>
 
 <style>
 header {
