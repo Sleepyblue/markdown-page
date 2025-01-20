@@ -1,6 +1,6 @@
 <template>
-  <header ref="header">
-    <nav>
+  <header>
+    <nav :class="activeSection">
       <slot />
     </nav>
     <div class="theme-buttons">
@@ -17,6 +17,15 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
+
+const props = defineProps<{
+  currentSection: string | null;
+}>();
+
+const activeSection = computed(() =>
+  props.currentSection?.replace("-section", ""),
+);
 </script>
 
 <style>
@@ -78,6 +87,14 @@ header {
   a {
     position: relative;
     text-decoration: none;
+    text-underline-offset: 3px;
+  }
+
+  .outline a[href="#outline"],
+  .craft a[href="#craft"],
+  .on-desk a[href="#on-desk"] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
   }
 
   a::after {
@@ -92,8 +109,9 @@ header {
     transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-
-  a:hover::after {
+  nav:not(.outline) a[href="#outline"]:hover::after,
+  nav:not(.craft) a[href="#craft"]:hover::after,
+  nav:not(.on-des) a[href="#on-desk"]:hover::after {
     transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
     width: 100%;
     left: 0;
@@ -109,7 +127,6 @@ header {
     position: relative;
   }
 
-
   button::before,
   button::after {
     position: absolute;
@@ -117,7 +134,6 @@ header {
     bottom: 0;
     opacity: 0;
     transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-
   }
 
   button::before {
