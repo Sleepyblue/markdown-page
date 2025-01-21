@@ -1,5 +1,11 @@
 <template>
   <header>
+    <div class="action-buttons">
+      <button class="menu-action" @click="handleClick">{{ drawerOpen ? "Close" : "Menu" }}</button>
+      <button class="scroll-action" v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
+        Top
+      </button>
+    </div>
     <nav :class="activeSection">
       <slot />
     </nav>
@@ -20,8 +26,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
+const drawerOpen = ref(false)
+
 const props = defineProps<{
   currentSection: string | null;
+  showScrollToTop: boolean;
 }>();
 
 const selectedTheme = ref("")
@@ -29,6 +38,11 @@ const selectedTheme = ref("")
 const activeSection = computed(() =>
   props.currentSection?.replace("-section", ""),
 );
+
+const headerStyle = computed(() => {
+  return drawerOpen.value ? 'translateY(0)' : 'translateY(102%)'
+});
+
 
 onMounted(() => {
   const prefersLightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
@@ -43,7 +57,18 @@ const handlePageTheme = (theme: "light" | "dark") => {
     htmlElement.setAttribute("data-theme", theme);
     selectedTheme.value = theme
   }
+
 }
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const handleClick = () => {
+  drawerOpen.value = !drawerOpen.value
+}
+
+
 </script>
 
 <style>
@@ -65,9 +90,11 @@ header {
   background-position:
     0 0,
     2px 2px;
-  transition:
-    color 0.5s,
-    background-color 0.5s;
+  transition: all 0.5s ease;
+
+  .menu-action {
+    display: none;
+  }
 
   @media (max-width: 600px) {
     border-bottom: unset;
@@ -75,12 +102,20 @@ header {
     position: fixed;
     right: 0;
     bottom: 0;
-    width: 95%;
+    width: 96%;
     border-top: 1px dashed var(--paper-text);
+    border-left: 1px solid var(--paper-text);
+    border-right: 1px solid var(--paper-text);
     margin: 0 auto;
-    justify-content: left;
     align-items: flex-end;
     gap: 48px;
+    transform: v-bind(headerStyle);
+    box-shadow: 0 2px 8px rgba(var(--paper-shadow), 0.4);
+
+
+    .menu-action {
+      display: block;
+    }
   }
 
   &::before,
@@ -90,7 +125,6 @@ header {
     transform: translateY(50%);
     bottom: 0px;
 
-
     @media (max-width: 600px) {
       bottom: unset;
       top: 0;
@@ -99,11 +133,28 @@ header {
   }
 
   &::before {
-    left: -10px;
+    left: -4px;
   }
 
   &::after {
-    right: -10px;
+    right: -4px;
+  }
+
+  .action-buttons {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding: 8px 16px;
+
+    @media (max-width: 600px) {
+      top: unset;
+      bottom: 100%;
+      justify-content: space-between;
+      padding: 12px 20px;
+    }
   }
 
   ul {
@@ -119,6 +170,10 @@ header {
     @media (max-width: 600px) {
       flex-direction: column;
     }
+  }
+
+  .theme-buttons ul {
+    align-items: flex-end;
   }
 
   button,
