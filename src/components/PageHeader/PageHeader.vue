@@ -149,52 +149,5 @@ header {
     width: 100%;
     left: 0;
   }
-
-  button {
-    background: none;
-    border: none;
-    font-size: 1.6rem;
-    color: var(--paper-text);
-    cursor: pointer;
-    padding: 0;
-    position: relative;
-  }
-
-  button::before,
-  button::after {
-    position: absolute;
-    font-size: 1.8rem;
-    bottom: 0;
-    opacity: 0;
-    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  button::before {
-    content: "[";
-    left: 0;
-  }
-
-  button::after {
-    content: "]";
-    right: 0;
-  }
-
-  button:hover::before {
-    left: -10px;
-    opacity: 1;
-
-    @media screen and (max-width: 1024px) {
-      left: -8px;
-    }
-  }
-
-  button:hover::after {
-    right: -10px;
-    opacity: 1;
-
-    @media screen and (max-width: 1024px) {
-      right: -8px;
-    }
-  }
 }
 </style>
