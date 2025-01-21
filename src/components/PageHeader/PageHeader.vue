@@ -6,10 +6,11 @@
     <div class="theme-buttons">
       <ul>
         <li>
-          <button @click="handlePageTheme('light')">Paper Light</button>
+          <button :class="{ selected: selectedTheme === 'light' }" @click="handlePageTheme('light')">Paper
+            Light</button>
         </li>
         <li>
-          <button @click="handlePageTheme('dark')">Ink Dark</button>
+          <button :class="{ selected: selectedTheme === 'dark' }" @click="handlePageTheme('dark')">Ink Dark</button>
         </li>
       </ul>
     </div>
@@ -17,15 +18,22 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 const props = defineProps<{
   currentSection: string | null;
 }>();
 
+const selectedTheme = ref("")
+
 const activeSection = computed(() =>
   props.currentSection?.replace("-section", ""),
 );
+
+onMounted(() => {
+  const prefersLightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
+  selectedTheme.value = prefersLightTheme ? 'light' : 'dark';
+});
 
 const handlePageTheme = (theme: "light" | "dark") => {
   const htmlElement = document.documentElement;
@@ -33,6 +41,7 @@ const handlePageTheme = (theme: "light" | "dark") => {
 
   if (currentTheme !== theme) {
     htmlElement.setAttribute("data-theme", theme);
+    selectedTheme.value = theme
   }
 }
 </script>
@@ -148,6 +157,18 @@ header {
     transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
     width: 100%;
     left: 0;
+  }
+
+  .theme-buttons {
+    .selected::before {
+      left: -10px;
+      opacity: 1;
+    }
+
+    .selected::after {
+      right: -10px;
+      opacity: 1;
+    }
   }
 }
 </style>
