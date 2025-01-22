@@ -1,20 +1,19 @@
 <template>
   <section ref="section" class="spotlight">
     <SpotlightMarkdown />
-    <div>
-      <p v-html="description" /> <em :key="currentSentenceIndex" v-html="currentSentence" />
+      <p v-html="description" />
+      <em :key="currentSentenceIndex" v-html="currentSentence" />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { defineEmits, onMounted, ref } from "vue";
 import useSectionObserver from "../../composables/useSectionObserver";
 import SpotlightMarkdown from "../../docs/SpotlightMarkdown.md"
 
 const section = ref<HTMLElement | null>(null);
-const sentences = ref<string[]>([])
-const description = ref("")
+const sentences = ref<string[]>([]);
+const description = ref("");
 const currentSentence = ref<string | null>("");
 const currentSentenceIndex = ref(0);
 const isFirstRender = ref(true);
@@ -24,29 +23,40 @@ const emit = defineEmits<{
   (e: "scroll-past", value: boolean): void;
 }>();
 
-useSectionObserver({ section, sectionEmit: emit, scrollTopEmit: emit, threshold: 0.15 });
+useSectionObserver({
+  section,
+  sectionEmit: emit,
+  scrollTopEmit: emit,
+  threshold: 0.15,
+});
 
 const updateSentence = () => {
   if (!sentences.value.length) return;
 
   const sentenceLength = currentSentence.value?.length || 0;
-  document.documentElement.style.setProperty('--typing-steps', (sentenceLength).toString());
+  document.documentElement.style.setProperty(
+    "--typing-steps",
+    sentenceLength.toString(),
+  );
   if (isFirstRender.value) {
     isFirstRender.value = false;
     return;
   }
-  currentSentenceIndex.value = (currentSentenceIndex.value + 1) % sentences.value.length;
+  currentSentenceIndex.value =
+    (currentSentenceIndex.value + 1) % sentences.value.length;
   currentSentence.value = sentences.value[currentSentenceIndex.value];
 };
 
 onMounted(() => {
   if (section.value) {
     const listItems = section.value.querySelectorAll("li");
-    const sentencesList = Array.from(listItems).map((li) => li.innerHTML?.trim() || '');
+    const sentencesList = Array.from(listItems).map(
+      (li) => li.innerHTML?.trim() || "",
+    );
     const paragraph = section.value.querySelector("p");
 
     sentences.value = sentencesList;
-    description.value = paragraph?.innerHTML || '';
+    description.value = paragraph?.innerHTML || "";
   }
 
   if (sentences.value.length > 0) {
@@ -54,7 +64,9 @@ onMounted(() => {
   }
 
   updateSentence();
-  setInterval(updateSentence, 5000);
+  setInterval(updateSentence, 20000);
+});
+
 });
 </script>
 
