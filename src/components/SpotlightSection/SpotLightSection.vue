@@ -1,9 +1,11 @@
 <template>
   <section ref="section" class="spotlight">
-    <SpotlightMarkdown />
-    <div class="typewriter">
-      <p v-html="description" />
-      <em :key="currentSentenceIndex" v-html="currentSentence" />
+    <div class="container">
+      <SpotlightMarkdown />
+      <div class="typewriter">
+        <p v-html="description" />
+        <em :key="currentSentenceIndex" v-html="currentSentence" />
+      </div>
     </div>
     <div class="sprite">
       <pre>{{ currentSprite }}</pre>
@@ -41,7 +43,7 @@ const updateSentence = () => {
 
   const sentenceLength = currentSentence.value?.length || 0;
   document.documentElement.style.setProperty(
-    "--typing-steps",
+    "--initial-typing-steps",
     sentenceLength.toString(),
   );
   if (isFirstRender.value) {
@@ -92,10 +94,6 @@ onUnmounted(() => {
 </script>
 
 <style>
-:root {
-  --typing-steps: 40;
-}
-
 .spotlight .markdown-body ul,
 .spotlight .markdown-body p {
   display: none;
@@ -105,6 +103,7 @@ onUnmounted(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-section);
 
   h1 {
     line-height: 1.2;
@@ -139,7 +138,7 @@ onUnmounted(() => {
       overflow: hidden;
       animation:
         blink 1s infinite,
-        typing 20s steps(var(--typing-steps)) infinite;
+        typing 20s steps(var(--initial-typing-steps)) infinite;
       z-index: 1;
 
       &::after {
