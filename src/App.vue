@@ -32,13 +32,10 @@ const updateVisibleSection = (sectionId: string | null) => {
 </script>
 
 <style>
-/* Remove after filling each section appropriately h2, */
-section:not(:first-child) {
-  height: 100vh;
-}
-
 main {
   display: flex;
   flex-direction: column;
+  gap: var(--spacing-body);
+  padding: var(--padding-main);
 }
 </style>
