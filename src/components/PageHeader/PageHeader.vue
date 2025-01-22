@@ -1,8 +1,15 @@
 <template>
   <header>
     <div class="action-buttons">
-      <button class="menu-action" @click="handleClick">{{ drawerOpen ? "Close" : "Menu" }}</button>
-      <button class="scroll-action" v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
+      <button class="menu-action" @click="handleClick">
+        {{ drawerOpen ? "Close" : "Menu" }}
+      </button>
+      <button
+        class="scroll-action"
+        v-if="showScrollToTop"
+        @click="scrollToTop"
+        aria-label="Scroll to the top"
+      >
         Top
       </button>
     </div>
@@ -12,11 +19,20 @@
     <div class="theme-buttons">
       <ul>
         <li>
-          <button :class="{ selected: selectedTheme === 'light' }" @click="handlePageTheme('light')">Paper
-            Light</button>
+          <button
+            :class="{ selected: selectedTheme === 'light' }"
+            @click="handlePageTheme('light')"
+          >
+            Paper Light
+          </button>
         </li>
         <li>
-          <button :class="{ selected: selectedTheme === 'dark' }" @click="handlePageTheme('dark')">Ink Dark</button>
+          <button
+            :class="{ selected: selectedTheme === 'dark' }"
+            @click="handlePageTheme('dark')"
+          >
+            Ink Dark
+          </button>
         </li>
       </ul>
     </div>
@@ -26,27 +42,28 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
 
-const drawerOpen = ref(false)
+const drawerOpen = ref(false);
 
 const props = defineProps<{
   currentSection: string | null;
   showScrollToTop: boolean;
 }>();
 
-const selectedTheme = ref("")
+const selectedTheme = ref("");
 
 const activeSection = computed(() =>
   props.currentSection?.replace("-section", ""),
 );
 
 const headerStyle = computed(() => {
-  return drawerOpen.value ? 'translateY(0)' : 'translateY(102%)'
+  return drawerOpen.value ? "translateY(0)" : "translateY(102%)";
 });
 
-
 onMounted(() => {
-  const prefersLightTheme = window.matchMedia("(prefers-color-scheme: light)").matches;
-  selectedTheme.value = prefersLightTheme ? 'light' : 'dark';
+  const prefersLightTheme = window.matchMedia(
+    "(prefers-color-scheme: light)",
+  ).matches;
+  selectedTheme.value = prefersLightTheme ? "light" : "dark";
 });
 
 const handlePageTheme = (theme: "light" | "dark") => {
@@ -55,20 +72,17 @@ const handlePageTheme = (theme: "light" | "dark") => {
 
   if (currentTheme !== theme) {
     htmlElement.setAttribute("data-theme", theme);
-    selectedTheme.value = theme
+    selectedTheme.value = theme;
   }
-
-}
+};
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
 const handleClick = () => {
-  drawerOpen.value = !drawerOpen.value
-}
-
-
+  drawerOpen.value = !drawerOpen.value;
+};
 </script>
 
 <style>
@@ -82,9 +96,11 @@ header {
   padding: 8px 16px;
   border-bottom: 1px dashed var(--paper-text);
   background: var(--paper-background);
-  background-image: linear-gradient(45deg,
+  background-image: linear-gradient(
+      45deg,
       rgba(0, 0, 0, 0.04) 25%,
-      transparent 25%),
+      transparent 25%
+    ),
     linear-gradient(-45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%);
   background-size: 4px 4px;
   background-position:
@@ -111,7 +127,6 @@ header {
     gap: 48px;
     transform: v-bind(headerStyle);
     box-shadow: 0 2px 8px rgba(var(--paper-shadow), 0.4);
-
 
     .menu-action {
       display: block;
