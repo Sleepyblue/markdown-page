@@ -25,6 +25,10 @@ useSectionObserver({ section, sectionEmit: emit });
   column-gap: 6rem;
   grid-template-columns: 0.2fr 0.8fr;
 
+  h2 {
+    grid-column: 1 / -1;
+  }
+
   h3 {
     grid-column: 1 / 2;
   }
