@@ -1,15 +1,21 @@
 <template>
   <section ref="section" class="spotlight">
     <SpotlightMarkdown />
+    <div class="typewriter">
       <p v-html="description" />
       <em :key="currentSentenceIndex" v-html="currentSentence" />
+    </div>
+    <div class="sprite">
+      <pre>{{ currentSprite }}</pre>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { defineEmits, onMounted, onUnmounted, ref } from "vue";
 import useSectionObserver from "../../composables/useSectionObserver";
-import SpotlightMarkdown from "../../docs/SpotlightMarkdown.md"
+import { sprites } from "./sprite.ts";
+import SpotlightMarkdown from "../../docs/SpotlightMarkdown.md";
 
 const section = ref<HTMLElement | null>(null);
 const sentences = ref<string[]>([]);
@@ -67,6 +73,21 @@ onMounted(() => {
   setInterval(updateSentence, 20000);
 });
 
+const currentSprite = ref(sprites[0]);
+const index = ref(0);
+
+const updateSprite = () => {
+  index.value = (index.value + 1) % sprites.length;
+  currentSprite.value = sprites[index.value];
+};
+
+const interval = ref(0);
+onMounted(() => {
+  interval.value = setInterval(updateSprite, 800);
+});
+
+onUnmounted(() => {
+  clearInterval(interval.value);
 });
 </script>
 
@@ -75,87 +96,90 @@ onMounted(() => {
   --typing-steps: 40;
 }
 
-
 .spotlight .markdown-body ul,
 .spotlight .markdown-body p {
   display: none;
-
 }
 
 .spotlight {
   overflow: hidden;
-}
-
-h1 {
-  /* margin-top: 48px; */
-  font-size: 12rem;
-  line-height: 1.2;
-
-  @media (max-width: 1024px) {
-    font-size: 9.6rem;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 4.8rem;
-  }
-
-}
-
-strong {
-  font-weight: 700;
-}
-
-section div {
   display: flex;
-  width: max-content;
-  white-space: nowrap;
-  line-height: 1.2;
+  flex-direction: column;
+  gap: 32px;
 
-  @media (max-width: 1280px) {
+  h1 {
+    margin-top: 48px;
+    line-height: 1.2;
+
+    @media (max-width: 1280px) {
+      margin-top: 36px;
+    }
+
+    @media (max-width: 1024px) {
+      margin-top: 36px;
+    }
+
+    @media (max-width: 600px) {
+      margin-top: 0;
+    }
+  }
+
+  .typewriter {
+    display: flex;
+    width: max-content;
+    white-space: nowrap;
+    line-height: 1.2;
+
+    @media (max-width: 1280px) {
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+    }
+
+    p {
+      font-size: clamp(1.6rem, 2vw, 3.2rem);
+      font-family: "Cormorant Garamond";
+
+      &::after {
+        content: "\00a0";
+      }
+    }
+
+    strong {
+      font-weight: 700;
+    }
+
+    em {
+      font-family: "Cormorant Garamond";
+      font-size: clamp(1.6rem, 2vw, 3.2rem);
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      animation:
+        blink 1s infinite,
+        typing 20s steps(var(--typing-steps)) infinite;
+
+      &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        border-right: 10px solid transparent;
+      }
+    }
+  }
+
+  .sprite {
+    display: flex;
     flex-direction: column;
-    line-height: 1.6;
-  }
-}
+    align-items: center;
+    align-self: center;
+    padding-top: 24px;
 
-p {
-  font-size: 3.2rem;
-  font-family: "Cormorand Garamond";
-
-  &::after {
-    content: "\00a0";
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 2.4rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 1.6rem;
-  }
-
-}
-
-em {
-  font-family: "Cormorand Garamond";
-  font-size: 3.2rem;
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  animation: blink 1s infinite, typing 5s steps(var(--typing-steps)) infinite;
-
-  &::after {
-    content: "";
-    width: 100%;
-    height: 100%;
-    border-right: 10px solid transparent;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 2.4rem;
-  }
-
-  @media (max-width: 1024px) {
-    font-size: 1.6rem;
+    pre {
+      line-height: 1.3;
+    }
   }
 }
 
@@ -178,7 +202,7 @@ em {
     width: 0;
   }
 
-  60% {
+  20% {
     width: 100%;
   }
 
