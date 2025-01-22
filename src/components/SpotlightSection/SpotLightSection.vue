@@ -105,23 +105,9 @@ onUnmounted(() => {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 32px;
 
   h1 {
-    margin-top: 48px;
     line-height: 1.2;
-
-    @media (max-width: 1280px) {
-      margin-top: 36px;
-    }
-
-    @media (max-width: 1024px) {
-      margin-top: 36px;
-    }
-
-    @media (max-width: 600px) {
-      margin-top: 0;
-    }
   }
 
   .typewriter {
@@ -130,17 +116,13 @@ onUnmounted(() => {
     white-space: nowrap;
     line-height: 1.2;
 
-    @media (max-width: 1280px) {
+    @media (max-width: 1024px) {
+      flex-direction: column;
       line-height: 1.6;
     }
 
-    @media (max-width: 600px) {
-      flex-direction: column;
-    }
-
     p {
-      font-size: clamp(1.6rem, 2vw, 3.2rem);
-      font-family: "Cormorant Garamond";
+      font-size: var(--font-size-description);
 
       &::after {
         content: "\00a0";
@@ -152,10 +134,8 @@ onUnmounted(() => {
     }
 
     em {
-      font-family: "Cormorant Garamond";
-      font-size: clamp(1.6rem, 2vw, 3.2rem);
+      font-size: var(--font-size-description);
       position: relative;
-      display: inline-block;
       overflow: hidden;
       animation:
         blink 1s infinite,
@@ -175,7 +155,6 @@ onUnmounted(() => {
     flex-direction: column;
     align-items: center;
     align-self: center;
-    padding-top: 24px;
 
     pre {
       line-height: 1.3;

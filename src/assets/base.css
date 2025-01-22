@@ -4,6 +4,14 @@
   --paper-highlight: #614b42;
   --paper-highlighted-text: #eadfcb;
   --paper-shadow: 97, 75, 66;
+  --font-size-h1: clamp(4.8rem, 6vw + 3rem, 8.5rem);
+  --font-size-h2: clamp(3.2rem, 4.5vw + 1rem, 4.8rem);
+  --font-size-h3: clamp(2.4rem, 3vw + 0.5rem, 3.6rem);
+  --font-size-body: clamp(1.4rem, 1.5vw, 2.2rem);
+  --font-size-description: clamp(1.6rem, 2.5vw, 3.6rem);
+  --font-size-pre: clamp(2rem, 4vw + 0.8rem, 3.6rem);
+  --font-type-header: "Fira Sans", sans-serif;
+  --font-type-body: "Cormorant Garamond", serif;
 }
 
 :root[data-theme="dark"] {
@@ -94,6 +102,30 @@ body {
   @media (max-width: 600px) {
     padding: 8px 12px;
   }
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-type-header);
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+}
+
+p,
+em {
+  font-size: var(--font-size-body);
+  font-family: var(--font-type-body);
+}
+
+pre {
+  font-size: var(--font-size-pre);
 }
 
 ::selection {

@@ -32,9 +32,8 @@ const updateVisibleSection = (sectionId: string | null) => {
 </script>
 
 <style>
-/* Remove after filling each section appropriately */
-h2,
-section {
+/* Remove after filling each section appropriately h2, */
+section:not(:first-child) {
   height: 100vh;
 }
 
