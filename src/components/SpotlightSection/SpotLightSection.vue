@@ -113,11 +113,11 @@ onUnmounted(() => {
     display: flex;
     width: max-content;
     white-space: nowrap;
-    line-height: 1.2;
+    line-height: 1.3;
 
     @media (max-width: 1024px) {
       flex-direction: column;
-      line-height: 1.6;
+      line-height: 1.2;
     }
 
     p {
@@ -164,15 +164,15 @@ onUnmounted(() => {
 
 @keyframes blink {
   0% {
-    border-right: 20px solid var(--paper-highlight);
+    border-right: var(--border-width) solid var(--paper-highlight);
   }
 
   50% {
-    border-right: 20px solid transparent;
+    border-right: var(--border-width) solid transparent;
   }
 
   100% {
-    border-right: 20px solid var(--paper-highlight);
+    border-right: var(--border-width) solid var(--paper-highlight);
   }
 }
 

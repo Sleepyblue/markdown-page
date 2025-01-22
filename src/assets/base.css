@@ -20,6 +20,15 @@
   --padding-main: clamp(2rem, 2vw + 1rem, 5rem) 0;
   /* Miscellaneous */
   --initial-typing-steps: 40;
+  --border-width: 20px;
+
+  @media (max-width: 1024px) {
+    --border-width: 12px;
+  }
+
+  @media (max-width: 600px) {
+    --border-width: 8px;
+  }
 }
 
 :root[data-theme="dark"] {
