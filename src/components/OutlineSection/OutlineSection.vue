@@ -23,7 +23,7 @@ useSectionObserver({ section, sectionEmit: emit });
   display: grid;
   row-gap: 4rem;
   column-gap: 6rem;
-  grid-template-columns: repeat(2, minmax(0.2fr, 0.8fr));
+  grid-template-columns: 0.2fr 0.8fr;
 
   h3 {
     grid-column: 1 / 2;
