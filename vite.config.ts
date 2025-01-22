@@ -25,7 +25,7 @@ export default defineConfig({
           marker: ":",
           openRender: (tokens, idx) => {
             const title = tokens[idx].info.trim().replace(/^details\s*/, "");
-            return `<details><summary>${title}</summary><div>\n`;
+            return `<details><summary><span>${title}</span></summary><div>\n`;
           },
           closeRender: () => {
             return `</div></details>\n`;
