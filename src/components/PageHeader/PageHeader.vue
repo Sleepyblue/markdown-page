@@ -4,12 +4,7 @@
       <button class="menu-action" @click="handleClick">
         {{ drawerOpen ? "Close" : "Menu" }}
       </button>
-      <button
-        class="scroll-action"
-        v-if="showScrollToTop"
-        @click="scrollToTop"
-        aria-label="Scroll to the top"
-      >
+      <button class="scroll-action" v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
         Top
       </button>
     </div>
@@ -19,18 +14,12 @@
     <div class="theme-buttons">
       <ul>
         <li>
-          <button
-            :class="{ selected: selectedTheme === 'light' }"
-            @click="handlePageTheme('light')"
-          >
+          <button :class="{ selected: selectedTheme === 'light' }" @click="handlePageTheme('light')">
             Paper Light
           </button>
         </li>
         <li>
-          <button
-            :class="{ selected: selectedTheme === 'dark' }"
-            @click="handlePageTheme('dark')"
-          >
+          <button :class="{ selected: selectedTheme === 'dark' }" @click="handlePageTheme('dark')">
             Ink Dark
           </button>
         </li>
@@ -91,16 +80,15 @@ header {
   top: 0;
   left: 0;
   display: flex;
+  z-index: 99;
   justify-content: space-between;
   align-items: center;
   padding: 8px 16px;
   border-bottom: 1px dashed var(--paper-text);
   background: var(--paper-background);
-  background-image: linear-gradient(
-      45deg,
+  background-image: linear-gradient(45deg,
       rgba(0, 0, 0, 0.04) 25%,
-      transparent 25%
-    ),
+      transparent 25%),
     linear-gradient(-45deg, rgba(0, 0, 0, 0.04) 25%, transparent 25%);
   background-size: 4px 4px;
   background-position:
@@ -124,7 +112,6 @@ header {
     border-right: 1px solid var(--paper-text);
     margin: 0 auto;
     align-items: flex-end;
-    gap: 48px;
     transform: v-bind(headerStyle);
     box-shadow: 0 2px 8px rgba(var(--paper-shadow), 0.4);
 

@@ -140,6 +140,7 @@ onUnmounted(() => {
       animation:
         blink 1s infinite,
         typing 20s steps(var(--typing-steps)) infinite;
+      z-index: 1;
 
       &::after {
         content: "";
