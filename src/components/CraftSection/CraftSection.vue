@@ -22,6 +22,7 @@ useSectionObserver({ section, sectionEmit: emit });
 #craft-section .markdown-body {
   counter-reset: item 0;
 
+
   details {
     counter-increment: item;
     border-top: 1px dashed var(--paper-text);
@@ -35,9 +36,20 @@ useSectionObserver({ section, sectionEmit: emit });
       display: grid;
       grid-template-columns: 0.3fr 0.7fr;
       align-items: end;
+      column-gap: clamp(2rem, 5vw + 1rem, 6rem);
       cursor: pointer;
-      font-size: 4.8rem;
+      font-size: var(--font-size-h2);
       font-weight: 200;
+
+      @media(max-width: 1024px) {
+        align-items: start;
+      }
+
+      @media(max-width: 600px) {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
     }
 
     /* Lacks some customization options */
@@ -46,16 +58,16 @@ useSectionObserver({ section, sectionEmit: emit });
     }
 
     summary::before {
-      content: "\\ 0" counter(item);
-      font-size: 6.4rem;
+      content: "\\0" counter(item);
+      font-size: var(--font-size-before);
       line-height: 1;
       font-weight: 200;
-      max-height: min-content;
+      max-width: max-content;
     }
 
     summary span {
       position: relative;
-      width: max-content;
+      max-width: max-content;
       line-height: 1;
       font-weight: 200;
 
@@ -103,27 +115,45 @@ useSectionObserver({ section, sectionEmit: emit });
     div {
       display: grid;
       grid-template-columns: 0.3fr 0.7fr;
-      column-gap: 2rem;
+      align-items: start;
+      padding: 0 2rem;
+      column-gap: clamp(2rem, 5vw + 1rem, 6rem);
+      /* border-top: 1px solid var(--paper-text); */
+
+      @media(max-width: 1024px) {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      @media(max-width: 600px) {
+        padding: 0;
+      }
+
+
 
       ul {
         list-style: none;
         display: flex;
+        flex-wrap: wrap;
         font-family: var(--font-type-body);
+        grid-row: 1 / 3;
+
+
+        li,
+        a {
+          font-weight: 700;
+        }
 
         li:not(:last-child)::after {
-          content: ",\00a0";
+          content: "\00a0\00a0";
         }
       }
 
       p {
         grid-column: 2 / 3;
 
-        &:first-child {
-          padding-bottom: 3rem;
-        }
-
-        &:nth-child(2) {
-          padding-bottom: 0.5rem;
+        @media(max-width: 1024px) {
+          grid-column: unset;
         }
       }
     }
