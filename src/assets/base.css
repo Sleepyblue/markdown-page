@@ -5,6 +5,7 @@
   --paper-highlight: #614b42;
   --paper-highlighted-text: #eadfcb;
   --paper-shadow: 97, 75, 66;
+  --paper-accent: #b13941;
   /* Font size*/
   --font-size-h1: clamp(4.8rem, 6vw + 3rem, 8.5rem);
   --font-size-before: clamp(5.4rem, 4vw + 1.5rem, 6.4rem);
@@ -38,6 +39,7 @@
   --paper-highlight: #cec4b4;
   --paper-highlighted-text: #504e47;
   --paper-shadow: 40, 39, 36;
+  --paper-accent: #ffb005;
 }
 
 :root[data-theme="light"] {
@@ -46,6 +48,7 @@
   --paper-highlight: #614b42;
   --paper-highlighted-text: #eadfcb;
   --paper-shadow: 97, 75, 66;
+  --paper-accent: #b13941;
 }
 
 /* System preference fallback */
@@ -56,6 +59,7 @@
     --paper-highlight: #cec4b4;
     --paper-highlighted-text: #504e47;
     --paper-shadow: 40, 39, 36;
+    --paper-accent: #ffb005;
   }
 }
 
@@ -66,6 +70,11 @@
   margin: 0;
   padding: 0;
   font-weight: normal;
+}
+
+*:focus {
+  outline: 2px dashed var(--paper-accent);
+  outline-offset: 3px;
 }
 
 html {
