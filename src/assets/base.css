@@ -72,8 +72,9 @@
   font-weight: normal;
 }
 
-*:focus {
-  outline: 2px dashed var(--paper-accent);
+*:focus-visible,
+label:focus-within {
+  outline: 2px solid var(--paper-accent);
   outline-offset: 3px;
 }
 
