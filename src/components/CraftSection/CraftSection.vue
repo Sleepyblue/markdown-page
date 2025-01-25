@@ -7,7 +7,7 @@
         <label>
           <span aria-hidden="true">$&nbsp;</span>
           <input type="search" ref="input" v-model="searchTerm" @keyup.enter="onSearch" @input="() => errorMessage = ''"
-            placeholder=" [ Search skill ]" minlength="3" pattern="^(?![0-9]+$).+$" required
+            placeholder=" [ Search skill ]" minlength="3" pattern="^(?![0-9]+$).+$"
             aria-label="Search through my skillset" aria-describedby="search-error" />
         </label>
         <p id="search-error" class="error-message" aria-live="polite">
@@ -112,7 +112,7 @@ const onSearch = () => {
     inputElement.setCustomValidity("");
 
     switch (true) {
-      case inputElement.value === "":
+      case inputElement.value.trim() === "":
         inputElement.setCustomValidity("Input cannot be empty.");
         errorMessage.value = "I think... you forgot to type something? Maybe? (¬‿¬)";
 
@@ -187,9 +187,10 @@ const onSearch = () => {
 
       .error-message {
         position: absolute;
-        bottom: 100%;
+        bottom: calc(100% + 6px);
         display: none;
-        color: var(--paper-accent);
+        color: var(--paper-error);
+        font-family: var(--font-type-header);
         font-size: 1.4rem;
       }
 
@@ -214,15 +215,15 @@ const onSearch = () => {
         display: none;
       }
 
-      label:has(input:invalid) {
-        outline: 2px solid var(--paper-accent);
+      label:has(input:focus:invalid) {
+        outline: 2px solid var(--paper-error);
       }
 
       input:focus {
         outline: none;
       }
 
-      label:has(input:invalid)~.error-message {
+      label:has(input:focus:invalid)~.error-message {
         display: block;
       }
 
@@ -244,11 +245,22 @@ const onSearch = () => {
         font-family: var(--font-type-body);
       }
 
-      >.not-found li span {
-        text-decoration: line-through;
+      >.not-found {
+
+        >span {
+          font-size: 1.2rem;
+        }
+
+        li span {
+          text-decoration: line-through;
+        }
       }
 
       .found {
+        >span {
+          font-size: 1.2rem;
+        }
+
         li span {
           color: var(--paper-highlighted-text);
           background: var(--paper-highlight);
