@@ -57,14 +57,16 @@ const updateSentence = () => {
 
 onMounted(() => {
   if (section.value) {
-    const listItems = section.value.querySelectorAll("li");
-    const sentencesList = Array.from(listItems).map(
-      (li) => li.innerHTML?.trim() || "",
-    );
+    const sentencesList = section.value.querySelector(".markdown-body ul");
     const paragraph = section.value.querySelector("p");
 
-    sentences.value = sentencesList;
+    if (!sentencesList) return;
+
+    sentences.value = [...sentencesList.children].map((li) => li.innerHTML?.trim() || "")
     description.value = paragraph?.innerHTML || "";
+
+    sentencesList.remove();
+    paragraph?.remove();
   }
 
   if (sentences.value.length > 0) {
