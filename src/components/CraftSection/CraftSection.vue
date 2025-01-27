@@ -19,16 +19,22 @@
         <div class="found" v-if="foundSkills.length">
           <span>✓ Found:</span>
           <ul>
-            <li v-for="skill in foundSkills" :key="skill.skill">
-              <span>{{ skill.skill }}</span> {{ skill.description }}
+            <li v-for="(skill, index) in foundSkills" :key="skill.skill">
+              <span><strong>{{ skill.skill }}</strong> {{ skill.description }}</span>
+              <button :aria-label="`Remove found skill: ${skill.skill}`" @click="removeSkill(index, 'found')">
+                remove
+              </button>
             </li>
           </ul>
         </div>
         <div class="not-found" v-if="notFoundSkills.length">
           <span>✗ Not found:</span>
           <ul>
-            <li v-for="notFoundSkill in notFoundSkills" :key="notFoundSkill">
+            <li v-for="(notFoundSkill, index) in notFoundSkills" :key="notFoundSkill">
               <span>{{ notFoundSkill }}</span>
+              <button :aria-label="`Remove not found skill: ${notFoundSkill}`" @click="removeSkill(index, 'not-found')">
+                remove
+              </button>
             </li>
           </ul>
         </div>
@@ -66,7 +72,10 @@ onMounted(() => {
 
   skillsList.value = [...skillsListElement.children].map((li) => {
     const [skill, description] = li.textContent?.split(":") || [];
-    return { skill, description };
+    return {
+      skill: skill?.trim(),
+      description: description?.trim()
+    };
   });
   skillsListElement.remove();
 });
@@ -135,6 +144,14 @@ const onSearch = () => {
 
   searchTerm.value = "";
 };
+
+const removeSkill = (index: number, type: "found" | "not-found") => {
+  if (type === 'found') {
+    foundSkills.value.splice(index, 1);
+  } else if (type === 'not-found') {
+    notFoundSkills.value.splice(index, 1);
+  }
+}
 </script>
 
 <style>
@@ -241,32 +258,76 @@ const onSearch = () => {
       padding: 2rem;
 
       ul {
-        list-style: "-\00a0" inside;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        list-style: "none";
         font-family: var(--font-type-body);
-      }
 
-      >.not-found {
+        @media (max-width: 600px) {
+          gap: 12px;
+        }
 
-        >span {
-          font-size: 1.2rem;
+        li {
+          position: relative;
+          display: flex;
+          align-items: baseline;
+          justify-content: space-between;
+          gap: 24px;
+          padding-left: 6px;
         }
 
         li span {
           text-decoration: line-through;
+          text-decoration-color: transparent;
+          transition: text-decoration-color 0.5s ease-in-out;
         }
+
+        li::before {
+          position: absolute;
+          content: "*";
+          left: -6px;
+        }
+
+        li:has(button:hover) span,
+        li:has(button:focus) span {
+          text-decoration-color: var(--paper-text);
+        }
+
+      }
+
+      .found>span,
+      .not-found>span {
+        font-size: 1.2rem;
       }
 
       .found {
-        >span {
-          font-size: 1.2rem;
-        }
-
-        li span {
+        strong {
           color: var(--paper-highlighted-text);
           background: var(--paper-highlight);
           font-family: "Fira Sans";
+          font-weight: 500;
         }
       }
+
+      button {
+        font-size: 12px;
+
+        &::after,
+        &::before {
+          font-size: 12px;
+        }
+
+        &:hover::before {
+          left: -6px;
+        }
+
+        &:hover::after {
+          right: -6px;
+        }
+      }
+
+
     }
 
     label {
