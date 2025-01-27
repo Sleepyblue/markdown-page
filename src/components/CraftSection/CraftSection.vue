@@ -428,7 +428,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
           width: 50%;
           height: 100%;
           background-color: var(--paper-highlight);
-          transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0s;
+          transition: all 1s var(--transition-timing-function) 0s;
         }
 
         &:hover:after,
@@ -436,7 +436,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
           width: 50%;
           height: 100%;
           background-color: var(--paper-highlight);
-          transition: all 1s cubic-bezier(0.22, 1, 0.36, 1) 0s;
+          transition: all 1s var(--transition-timing-function) 0s;
         }
       }
 

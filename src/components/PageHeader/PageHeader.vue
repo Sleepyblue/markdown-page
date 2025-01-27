@@ -234,13 +234,13 @@ header {
     left: inherit;
     right: 0;
     bottom: 0;
-    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 1s var(--transition-timing-function);
   }
 
   nav:not(.outline) a[href="#outline"]:hover::after,
   nav:not(.craft) a[href="#craft"]:hover::after,
   nav:not(.on-des) a[href="#on-desk"]:hover::after {
-    transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 1s var(--transition-timing-function);
     width: 100%;
     left: 0;
   }
