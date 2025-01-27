@@ -256,6 +256,8 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       border-bottom: 1px solid var(--paper-text);
       gap: 3.2rem;
       padding: 2rem;
+      max-height: 600px;
+      overflow: scroll;
 
       ul {
         display: flex;
