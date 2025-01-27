@@ -17,7 +17,8 @@ export default defineConfig({
     Markdown({
       markdownItSetup(md) {
         md.use(tasklist, {
-          disabled: false,
+          disabled: true,
+          containerClass: "checkbox-list",
         });
         md.use(attrs);
         md.use(container, {
