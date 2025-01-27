@@ -1,10 +1,10 @@
 <template>
   <header>
     <div class="action-buttons">
-      <button class="menu-action" @click="handleClick">
+      <button @click="handleClick">
         {{ drawerOpen ? "Close" : "Menu" }}
       </button>
-      <button class="scroll-action" v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
+      <button v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
         Top
       </button>
     </div>
@@ -96,9 +96,7 @@ header {
     2px 2px;
   transition: all 0.5s ease;
 
-  .menu-action {
-    display: none;
-  }
+
 
   @media (max-width: 600px) {
     border-bottom: unset;
@@ -156,6 +154,37 @@ header {
       bottom: 100%;
       justify-content: space-between;
       padding: 12px 20px;
+    }
+
+    >button {
+      color: var(--paper-highlighted-text);
+      background-color: var(--paper-highlight);
+      padding: 2px 4px;
+
+      &::before,
+      &::after {
+        top: 0;
+        bottom: 0;
+        color: var(--paper-highlighted-text);
+        background-color: var(--paper-highlight);
+      }
+
+      &:hover::before {
+        left: -6px;
+      }
+
+      &:hover::after {
+        right: -6px;
+      }
+
+    }
+
+    >button:first-child {
+      display: none;
+
+      @media (max-width: 600px) {
+        display: block;
+      }
     }
   }
 
