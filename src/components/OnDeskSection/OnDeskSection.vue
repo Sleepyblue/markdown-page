@@ -5,17 +5,36 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import OnDeskMarkdown from "../../docs/OnDeskMarkdown.md"
 import useSectionObserver from "../../composables/useSectionObserver";
 
-const section = ref(null);
+const section = ref<HTMLElement | null>(null);
 
 const emit = defineEmits<{
   (e: "visible-section", value: string | null): void;
 }>();
 
 useSectionObserver({ section, sectionEmit: emit });
+
+onMounted(() => {
+  const progressBars = section.value?.querySelectorAll("progress")
+
+  if (!progressBars) return;
+
+  Array.from(progressBars).map((progressBar) => {
+    const listParent = progressBar.closest("li");
+
+    if (!listParent) return;
+
+    const max = progressBar.max;
+    const current = progressBar.value;
+    const progressPercentage = Math.floor((current * 100) / max)
+
+    listParent.setAttribute("data-progress", `${progressPercentage}`)
+  })
+
+})
 </script>
 
 <style>
@@ -40,21 +59,38 @@ useSectionObserver({ section, sectionEmit: emit });
 
   .checkbox-list {
     display: grid;
-    row-gap: clamp(2rem, 1vw + 1rem, 6rem);
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     column-gap: clamp(2rem, 1vw + 1rem, 6rem);
+    row-gap: clamp(2rem, 1vw + 1rem, 6rem);
     padding-top: 32px;
 
     .task-list-item {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 4px;
       max-width: 320px;
 
-      &:has(progress) p {
+      li {
+        position: relative;
+      }
+
+      li:has(progress)[data-progress]::after {
+        content: attr(data-progress) '%';
+        position: absolute;
+        right: 6px;
+        bottom: 0;
+        font-weight: 500;
+        font-size: 1.4rem;
+        z-index: 2;
+      }
+
+      & p {
         display: flex;
         align-items: baseline;
-        gap: 8px;
+        gap: 12px;
+      }
+
+      &:has(progress) p {
         order: 2;
       }
 
@@ -95,13 +131,11 @@ useSectionObserver({ section, sectionEmit: emit });
     appearance: none;
     width: 100%;
     height: 24px;
-    background:
-      radial-gradient(circle, transparent 20%, var(--paper-background) 20%, var(--paper-background) 80%, transparent 80%, transparent),
-      radial-gradient(circle, transparent 20%, var(--paper-background) 20%, var(--paper-background) 80%, transparent 80%, transparent) 10px 10px,
-      linear-gradient(var(--paper-text) 4px, transparent 4px) 0 -2px,
-      linear-gradient(90deg, var(--paper-text) 4px, transparent 4px) -2px 0;
-    background-size: 6px 6px, 6px 6px, 3px 3px, 3px 3px;
+    background: transparent;
     border: none;
+    border-top: 1px solid var(--paper-text);
+    border-right: 1px solid var(--paper-text);
+    border-left: 1px solid var(--paper-text);
 
     @media (max-width: 768px) {
       height: 16px;
@@ -111,7 +145,10 @@ useSectionObserver({ section, sectionEmit: emit });
   progress::-webkit-progress-bar,
   progress::-webkit-progress-value,
   progress::-moz-progress-bar {
-    background-color: var(--paper-text);
+    background: var(--paper-background);
+    background-image: radial-gradient(var(--paper-text) 0.5px, var(--paper-background) 0.5px);
+    background-size: 4px 4px;
+    box-shadow: 0 0 0 0.3rem inset var(--paper-background);
   }
 }
 </style>
