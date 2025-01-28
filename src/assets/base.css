@@ -149,7 +149,8 @@ h2 {
 }
 
 p,
-em {
+em,
+label {
   font-size: var(--font-size-body);
   font-family: var(--font-type-body);
 }
