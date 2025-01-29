@@ -1,5 +1,6 @@
 <template>
-  <PageHeader :current-section="currentSection" :show-scroll-to-top="showScrollToTop">
+  <PageHeader :current-section="currentSection" :show-scroll-to-top="showScrollToTop"
+    :intersection-ratio="intersectionRatio">
     <HeaderMarkdown />
   </PageHeader>
   <main>
@@ -8,6 +9,7 @@
     <CraftSection @visible-section="updateVisibleSection" />
     <OnDeskSection @visible-section="updateVisibleSection" />
   </main>
+  <PageFooter @footer-emit="updateHeaderButtonsPosition" />
 </template>
 
 <script setup lang="ts">
@@ -17,10 +19,12 @@ import SpotlightSection from "./components/SpotlightSection/SpotLightSection.vue
 import OutlineSection from "./components/OutlineSection/OutlineSection.vue";
 import CraftSection from "./components/CraftSection/CraftSection.vue";
 import OnDeskSection from "./components/OnDeskSection/OnDeskSection.vue";
+import PageFooter from "./components/PageFooter/PageFooter.vue";
 import HeaderMarkdown from "./docs/HeaderMarkdown.md";
 
 const showScrollToTop = ref(false);
 const currentSection = ref<string | null>("");
+const intersectionRatio = ref<number | null>(0)
 
 const handleScrollPast = (show: boolean) => {
   showScrollToTop.value = show;
@@ -29,6 +33,10 @@ const handleScrollPast = (show: boolean) => {
 const updateVisibleSection = (sectionId: string | null) => {
   currentSection.value = sectionId;
 };
+
+const updateHeaderButtonsPosition = (ratio: number | null) => {
+  intersectionRatio.value = ratio;
+}
 </script>
 
 <style>
