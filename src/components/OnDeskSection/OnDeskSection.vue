@@ -128,6 +128,7 @@ onMounted(() => {
 
   progress {
     -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
     width: 100%;
     height: 24px;
@@ -140,6 +141,26 @@ onMounted(() => {
     @media (max-width: 768px) {
       height: 16px;
     }
+
+    &::-moz-progress-bar {
+      background: var(--paper-background);
+      background-image: radial-gradient(var(--paper-text) 0.5px, var(--paper-background) 0.5px);
+      background-size: 4px 4px;
+      box-shadow: 0 0 0 0.3rem inset var(--paper-background);
+    }
+
+    &::-webkit-progress-bar {
+      background: var(--paper-background);
+    }
+
+    &::-webkit-progress-value {
+      background-image: radial-gradient(var(--paper-text) 0.5px, var(--paper-background) 0.5px);
+      background-size: 4px 4px;
+      box-shadow: 0 0 0 0.3rem inset var(--paper-background);
+    }
+  }
+}
+
   }
 
   progress::-webkit-progress-bar,
