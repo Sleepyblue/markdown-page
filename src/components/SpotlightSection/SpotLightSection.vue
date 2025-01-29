@@ -62,7 +62,9 @@ onMounted(() => {
 
     if (!sentencesList) return;
 
-    sentences.value = [...sentencesList.children].map((li) => li.innerHTML?.trim() || "")
+    sentences.value = [...sentencesList.children].map(
+      (li) => li.innerHTML?.trim() || "",
+    );
     description.value = paragraph?.innerHTML || "";
 
     sentencesList.remove();
@@ -117,7 +119,7 @@ onUnmounted(() => {
     white-space: nowrap;
     line-height: 1.3;
 
-    @media (max-width: 1024px) {
+    @media (max-width: 600px) {
       flex-direction: column;
       line-height: 1.2;
     }
