@@ -33,7 +33,6 @@ onMounted(() => {
 
     listParent.setAttribute("data-progress", `${progressPercentage}`)
   })
-
 })
 </script>
 
@@ -46,7 +45,6 @@ onMounted(() => {
   p {
     grid-column: 1 / -1;
   }
-
 
   h3 {
     grid-column: 1 / 2;
@@ -64,11 +62,17 @@ onMounted(() => {
     row-gap: clamp(2rem, 1vw + 1rem, 6rem);
     padding-top: 32px;
 
+    @media (max-width: 600px) {
+      justify-items: center;
+    }
+
     .task-list-item {
+      position: relative;
       display: flex;
       flex-direction: column;
       gap: 4px;
       max-width: 320px;
+      transition: all 3s ease;
 
       li {
         position: relative;
@@ -84,10 +88,21 @@ onMounted(() => {
         z-index: 2;
       }
 
-      & p {
+      & p:first-of-type {
         display: flex;
         align-items: baseline;
         gap: 12px;
+      }
+
+      & p:last-of-type {
+        display: none;
+        text-align: right;
+        color: var(--paper-error);
+        font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+      }
+
+      &:has(.task-list-item-checkbox:checked) p:last-of-type {
+        display: block;
       }
 
       &:has(progress) p {
@@ -122,6 +137,7 @@ onMounted(() => {
     }
 
     .task-list-item-label {
+      position: relative;
       cursor: pointer;
     }
   }
@@ -158,18 +174,6 @@ onMounted(() => {
       background-size: 4px 4px;
       box-shadow: 0 0 0 0.3rem inset var(--paper-background);
     }
-  }
-}
-
-  }
-
-  progress::-webkit-progress-bar,
-  progress::-webkit-progress-value,
-  progress::-moz-progress-bar {
-    background: var(--paper-background);
-    background-image: radial-gradient(var(--paper-text) 0.5px, var(--paper-background) 0.5px);
-    background-size: 4px 4px;
-    box-shadow: 0 0 0 0.3rem inset var(--paper-background);
   }
 }
 </style>
