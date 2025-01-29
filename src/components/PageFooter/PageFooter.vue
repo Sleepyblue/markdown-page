@@ -34,7 +34,7 @@ footer {
     }
 
     p {
-      font-size: clamp(1.2rem, 1.5vw, 1.4rem)
+      font-size: clamp(1.2rem, 1.5vw, 1.4rem);
     }
 
   }
