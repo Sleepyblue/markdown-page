@@ -36,6 +36,7 @@ const drawerOpen = ref(false);
 const props = defineProps<{
   currentSection: string | null;
   showScrollToTop: boolean;
+  intersectionRatio: number | null;
 }>();
 
 const selectedTheme = ref("");
@@ -72,6 +73,13 @@ const scrollToTop = () => {
 const handleClick = () => {
   drawerOpen.value = !drawerOpen.value;
 };
+
+const translatePercentage = computed(() => {
+  if (!props.intersectionRatio) return '0%'
+
+  const translate = drawerOpen.value ? "0%" : `-${Math.round(props.intersectionRatio * 100) * 1.3}%`
+  return translate
+})
 </script>
 
 <style>
@@ -95,8 +103,6 @@ header {
     0 0,
     2px 2px;
   transition: all 0.5s ease;
-
-
 
   @media (max-width: 600px) {
     border-bottom: unset;
@@ -154,6 +160,8 @@ header {
       bottom: 100%;
       justify-content: space-between;
       padding: 12px 20px;
+      transform: translateY(v-bind(translatePercentage));
+      transition: transform 0.1s linear;
     }
 
     >button {
@@ -176,7 +184,6 @@ header {
       &:hover::after {
         right: -6px;
       }
-
     }
 
     >button:first-child {
