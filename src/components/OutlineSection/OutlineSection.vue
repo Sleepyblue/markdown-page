@@ -37,6 +37,18 @@ useSectionObserver({ section, sectionEmit: emit });
     grid-column: 2/3
   }
 
+  a {
+    text-decoration-style: dashed;
+  }
+
+  a:hover {
+    text-decoration-style: solid;
+  }
+
+  a:visited {
+    color: var(--paper-error)
+  }
+
   @media (max-width: 600px) {
     display: flex;
     flex-direction: column;
