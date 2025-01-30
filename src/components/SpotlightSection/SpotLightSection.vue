@@ -98,16 +98,19 @@ onUnmounted(() => {
 </script>
 
 <style>
-.spotlight .markdown-body ul,
-.spotlight .markdown-body p {
-  display: none;
-}
-
 .spotlight {
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-section);
+
+  .markdown-body {
+
+    ul,
+    p {
+      display: none;
+    }
+  }
 
   h1 {
     line-height: 1.2;
