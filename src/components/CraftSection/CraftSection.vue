@@ -124,16 +124,20 @@ const onSearch = () => {
       case inputElement.value.trim() === "":
         inputElement.setCustomValidity("Input cannot be empty.");
         errorMessage.value = "I think... you forgot to type something? Maybe? (¬‿¬)";
-
+        inputElement.focus()
         return;
+
       case inputElement.validity.tooShort:
         errorMessage.value = `C'mon, you gotta type at least ${inputElement.minLength} letters! (╯°Д°)╯`;
+        inputElement.focus()
         return;
 
       case !/^(?![0-9]+$).{3,}$/.test(inputElement.value):
         errorMessage.value = "Just numbers? Nah, that won't work! (¬_¬) Try typing some letters too!";
+        inputElement.focus()
         return;
     }
+
   }
 
   const { matches, noMatch } = permissiveSearch(searchTerm.value);
@@ -191,6 +195,8 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
 
       button {
         text-wrap: nowrap;
+        font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+        font-family: var(--font-type-header);
       }
 
       button::before,
@@ -218,9 +224,9 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       span::after {
         position: absolute;
         content: "|";
-        right: -4px;
+        right: -6px;
         top: 50%;
-        transform: translateY(-50%);
+        transform: translateY(-45%);
         font-size: 1.8rem;
         font-weight: 300;
         line-height: normal;
@@ -232,18 +238,23 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         display: none;
       }
 
-      label:has(input:focus:invalid) {
+      input {
+        padding: 4px 4px 0 4px;
+
+      }
+
+      input:focus:invalid {
         outline: 2px solid var(--paper-error);
       }
 
+      input:focus:invalid,
       input:focus {
-        outline: none;
+        outline-offset: 0px;
       }
 
       label:has(input:focus:invalid)~.error-message {
         display: block;
       }
-
     }
 
     .skills-list {
