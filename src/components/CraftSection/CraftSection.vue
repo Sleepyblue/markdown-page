@@ -10,9 +10,11 @@
             placeholder=" [ Search skill ]" minlength="3" pattern="^(?![0-9]+$).+$"
             aria-label="Search through my skillset" aria-describedby="search-error" />
         </label>
-        <p id="search-error" class="error-message" aria-live="polite">
-          {{ errorMessage }}
-        </p>
+        <div class="error-message">
+          <p id="search-error" aria-live="polite">
+            {{ errorMessage }}
+          </p>
+        </div>
         <button @click="onSearch">Search</button>
       </div>
       <div class="skills-list" v-if="foundSkills.length || notFoundSkills.length">
@@ -123,17 +125,17 @@ const onSearch = () => {
     switch (true) {
       case inputElement.value.trim() === "":
         inputElement.setCustomValidity("Input cannot be empty.");
-        errorMessage.value = "I think... you forgot to type something? Maybe? (¬‿¬)";
+        errorMessage.value = "I think... you forgot to type something? (≖_≖)"
         inputElement.focus()
         return;
 
       case inputElement.validity.tooShort:
-        errorMessage.value = `C'mon, you gotta type at least ${inputElement.minLength} letters! (╯°Д°)╯`;
+        errorMessage.value = `C'mon, type at least ${inputElement.minLength} letters! (╯°Д°)╯`;
         inputElement.focus()
         return;
 
       case !/^(?![0-9]+$).{3,}$/.test(inputElement.value):
-        errorMessage.value = "Just numbers? Nah, that won't work! (¬_¬) Try typing some letters too!";
+        errorMessage.value = "Numbers only? Mix letters in! (+_+)";
         inputElement.focus()
         return;
     }
@@ -173,7 +175,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       display: flex;
       flex-direction: column;
 
-      p {
+      >p {
         margin-bottom: 2rem;
       }
     }
@@ -193,10 +195,76 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       gap: 1rem;
       padding: 0 1rem;
 
-      button {
-        text-wrap: nowrap;
+      span {
+        position: relative;
+        font-family: var(--font-type-header);
+        font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+      }
+
+      span::after {
+        position: absolute;
+        content: "|";
+        right: -4px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.8rem;
+        font-weight: 300;
+        animation: inputFakeBlink 1s step-end infinite;
+      }
+
+      label {
+        padding: 4px;
+        display: inline-flex;
+        font-family: inherit;
+        width: 100%;
+      }
+
+      label:has(input:not(:placeholder-shown)) span::after,
+      label:has(input:focus) span::after {
+        display: none;
+      }
+
+      input {
+        background-color: transparent;
+        border: none;
+        width: 100%;
+        color: var(--paper-text);
+        caret-color: var(--paper-text);
         font-size: clamp(1.2rem, 1.5vw, 1.4rem);
         font-family: var(--font-type-header);
+      }
+
+      input:focus:invalid {
+        outline: 2px solid var(--paper-error);
+      }
+
+      label:has(input:focus:invalid)~.error-message {
+        display: grid;
+      }
+
+      .error-message {
+        display: none;
+        grid-template-columns: 1fr 1fr;
+        position: absolute;
+        right: 0;
+        bottom: 100%;
+        text-align: right;
+        color: var(--paper-error);
+        font-family: var(--font-type-header);
+        font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+
+        p {
+          grid-column: 1 / -1;
+
+          @media (max-width: 768px) {
+            grid-column: 2 / 3;
+          }
+        }
+      }
+
+      button {
+        font-family: inherit;
+        font-size: clamp(1.2rem, 1.5vw, 1.4rem);
       }
 
       button::before,
@@ -206,54 +274,6 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
 
       button:active {
         transform: translateY(2px)
-      }
-
-      .error-message {
-        position: absolute;
-        bottom: calc(100% + 6px);
-        display: none;
-        color: var(--paper-error);
-        font-family: var(--font-type-header);
-        font-size: 1.4rem;
-      }
-
-      span {
-        position: relative;
-      }
-
-      span::after {
-        position: absolute;
-        content: "|";
-        right: -6px;
-        top: 50%;
-        transform: translateY(-45%);
-        font-size: 1.8rem;
-        font-weight: 300;
-        line-height: normal;
-        animation: inputFakeBlink 1s step-end infinite;
-      }
-
-      label:has(input:not(:placeholder-shown)) span::after,
-      label:has(input:focus) span::after {
-        display: none;
-      }
-
-      input {
-        padding: 4px 4px 0 4px;
-
-      }
-
-      input:focus:invalid {
-        outline: 2px solid var(--paper-error);
-      }
-
-      input:focus:invalid,
-      input:focus {
-        outline-offset: 0px;
-      }
-
-      label:has(input:focus:invalid)~.error-message {
-        display: block;
       }
     }
 
@@ -306,7 +326,6 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         li:has(button:focus) span {
           text-decoration-color: var(--paper-text);
         }
-
       }
 
       .found>span,
@@ -339,23 +358,6 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
           right: -6px;
         }
       }
-
-
-    }
-
-    label {
-      display: inline-flex;
-      width: 100%;
-    }
-
-    input {
-      display: inline-block;
-      background-color: transparent;
-      border: none;
-      width: 100%;
-      font-family: var(--font-type-header);
-      color: var(--paper-text);
-      caret-color: var(--paper-text);
     }
   }
 
