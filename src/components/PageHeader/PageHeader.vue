@@ -68,6 +68,10 @@ const handlePageTheme = (theme: "light" | "dark") => {
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+
+  if (window.location.hash) {
+    window.history.replaceState(null, document.title, window.location.pathname);
+  }
 };
 
 const handleClick = () => {
