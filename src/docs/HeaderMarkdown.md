@@ -1,3 +1,0 @@
-- [Outline](#outline)
-- [Craft](#craft)
-- [On Desk](#on-desk)
