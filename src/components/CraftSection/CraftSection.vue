@@ -6,8 +6,8 @@
       <div class="skills-input">
         <label>
           <span aria-hidden="true">$&nbsp;</span>
-          <input type="search" ref="input" v-model="searchTerm" @keyup.enter="onSearch" @input="() => errorMessage = ''"
-            placeholder=" [ Search skill ]" minlength="3" pattern="^(?![0-9]+$).+$"
+          <input type="search" ref="input" v-model="searchTerm" @keyup.enter="onSearch"
+            @input="() => (errorMessage = '')" placeholder=" [ Search skill ]" minlength="3" pattern="^(?![0-9]+$).+$"
             aria-label="Search through my skillset" aria-describedby="search-error" />
         </label>
         <div class="error-message">
@@ -22,7 +22,8 @@
           <span>✓ Found:</span>
           <ul>
             <li v-for="(skill, index) in foundSkills" :key="skill.skill">
-              <span><strong>{{ skill.skill }}</strong> {{ skill.description }}</span>
+              <span><strong>{{ skill.skill }}</strong>
+                {{ skill.description }}</span>
               <button :aria-label="`Remove found skill: ${skill.skill}`" @click="removeSkill(index, 'found')">
                 remove
               </button>
@@ -42,14 +43,13 @@
         </div>
       </div>
     </div>
-    <CraftMarkdown />
+    <slot />
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import useSectionObserver from "../../composables/useSectionObserver";
-import CraftMarkdown from "../../docs/CraftMarkdown.md";
 
 type Skill = { skill: string; description: string };
 
@@ -59,7 +59,7 @@ const skillsList = ref<Skill[]>([]);
 const searchTerm = ref("");
 const foundSkills = ref<Skill[]>([]);
 const notFoundSkills = ref<string[]>([]);
-const errorMessage = ref("")
+const errorMessage = ref("");
 
 const emit = defineEmits<{
   (e: "visible-section", value: string | null): void;
@@ -76,7 +76,7 @@ onMounted(() => {
     const [skill, description] = li.textContent?.split(":") || [];
     return {
       skill: skill?.trim(),
-      description: description?.trim()
+      description: description?.trim(),
     };
   });
   skillsListElement.remove();
@@ -125,21 +125,20 @@ const onSearch = () => {
     switch (true) {
       case inputElement.value.trim() === "":
         inputElement.setCustomValidity("Input cannot be empty.");
-        errorMessage.value = "I think... you forgot to type something? (≖_≖)"
-        inputElement.focus()
+        errorMessage.value = "I think... you forgot to type something? (≖_≖)";
+        inputElement.focus();
         return;
 
       case inputElement.validity.tooShort:
         errorMessage.value = `C'mon, type at least ${inputElement.minLength} letters! (╯°Д°)╯`;
-        inputElement.focus()
+        inputElement.focus();
         return;
 
       case !/^(?![0-9]+$).{3,}$/.test(inputElement.value):
         errorMessage.value = "Numbers only? Mix letters in! (+_+)";
-        inputElement.focus()
+        inputElement.focus();
         return;
     }
-
   }
 
   const { matches, noMatch } = permissiveSearch(searchTerm.value);
@@ -152,12 +151,12 @@ const onSearch = () => {
 };
 
 const removeSkill = (index: number, type: "found" | "not-found") => {
-  if (type === 'found') {
+  if (type === "found") {
     foundSkills.value.splice(index, 1);
-  } else if (type === 'not-found') {
+  } else if (type === "not-found") {
     notFoundSkills.value.splice(index, 1);
   }
-}
+};
 </script>
 
 <style>
@@ -273,7 +272,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       }
 
       button:active {
-        transform: translateY(2px)
+        transform: translateY(2px);
       }
     }
 

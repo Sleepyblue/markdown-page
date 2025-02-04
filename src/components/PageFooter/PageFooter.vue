@@ -1,20 +1,23 @@
 <template>
   <footer ref="footer">
-    <FooterMarkdown />
+    <slot />
   </footer>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
-import FooterMarkdown from "../../docs/FooterMarkdown.md"
 import useSectionObserver from "@/composables/useSectionObserver";
 
-const footer = ref<HTMLElement | null>(null)
+const footer = ref<HTMLElement | null>(null);
 const emit = defineEmits<{
   (e: "footer-emit", value: number | null): void;
 }>();
 
-useSectionObserver({ section: footer, footerEmit: emit, threshold: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] })
+useSectionObserver({
+  section: footer,
+  footerEmit: emit,
+  threshold: [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+});
 </script>
 
 <style>
@@ -36,7 +39,6 @@ footer {
     p {
       font-size: clamp(1.2rem, 1.5vw, 1.4rem);
     }
-
   }
 
   &::before,
