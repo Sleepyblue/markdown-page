@@ -1,12 +1,11 @@
 <template>
   <section ref="section" id="on-desk-section">
-    <OnDeskMarkdown />
+    <slot />
   </section>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import OnDeskMarkdown from "../../docs/OnDeskMarkdown.md"
 import useSectionObserver from "../../composables/useSectionObserver";
 
 const section = ref<HTMLElement | null>(null);
@@ -18,7 +17,7 @@ const emit = defineEmits<{
 useSectionObserver({ section, sectionEmit: emit });
 
 onMounted(() => {
-  const progressBars = section.value?.querySelectorAll("progress")
+  const progressBars = section.value?.querySelectorAll("progress");
 
   if (!progressBars) return;
 
@@ -29,11 +28,11 @@ onMounted(() => {
 
     const max = progressBar.max;
     const current = progressBar.value;
-    const progressPercentage = Math.floor((current * 100) / max)
+    const progressPercentage = Math.floor((current * 100) / max);
 
-    listParent.setAttribute("data-progress", `${progressPercentage}`)
-  })
-})
+    listParent.setAttribute("data-progress", `${progressPercentage}`);
+  });
+});
 </script>
 
 <style>
@@ -79,7 +78,7 @@ onMounted(() => {
       }
 
       li:has(progress)[data-progress]::after {
-        content: attr(data-progress) '%';
+        content: attr(data-progress) "%";
         position: absolute;
         right: 6px;
         bottom: 0;
@@ -160,7 +159,8 @@ onMounted(() => {
 
     &::-moz-progress-bar {
       background: var(--paper-background);
-      background-image: radial-gradient(var(--paper-text) 0.5px, var(--paper-background) 0.5px);
+      background-image: radial-gradient(var(--paper-text) 0.5px,
+          var(--paper-background) 0.5px);
       background-size: 4px 4px;
       box-shadow: 0 0 0 0.3rem inset var(--paper-background);
     }
@@ -170,7 +170,8 @@ onMounted(() => {
     }
 
     &::-webkit-progress-value {
-      background-image: radial-gradient(var(--paper-text) 0.5px, var(--paper-background) 0.5px);
+      background-image: radial-gradient(var(--paper-text) 0.5px,
+          var(--paper-background) 0.5px);
       background-size: 4px 4px;
       box-shadow: 0 0 0 0.3rem inset var(--paper-background);
     }

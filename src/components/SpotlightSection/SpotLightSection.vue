@@ -1,7 +1,7 @@
 <template>
   <section ref="section" class="spotlight">
     <div class="container">
-      <SpotlightMarkdown />
+      <slot />
       <div class="typewriter">
         <p v-html="description" />
         <em :key="currentSentenceIndex" v-html="currentSentence" />
@@ -17,7 +17,6 @@
 import { defineEmits, onMounted, onUnmounted, ref } from "vue";
 import useSectionObserver from "../../composables/useSectionObserver";
 import { sprites } from "./sprite.ts";
-import SpotlightMarkdown from "../../docs/SpotlightMarkdown.md";
 
 const section = ref<HTMLElement | null>(null);
 const sentences = ref<string[]>([]);

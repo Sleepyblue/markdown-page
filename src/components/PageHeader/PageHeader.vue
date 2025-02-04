@@ -75,11 +75,13 @@ const handleClick = () => {
 };
 
 const translatePercentage = computed(() => {
-  if (!props.intersectionRatio) return '0%'
+  if (!props.intersectionRatio) return "0%";
 
-  const translate = drawerOpen.value ? "0%" : `-${Math.round(props.intersectionRatio * 100) * 1.3}%`
-  return translate
-})
+  const translate = drawerOpen.value
+    ? "0%"
+    : `-${Math.round(props.intersectionRatio * 100) * 1.3}%`;
+  return translate;
+});
 </script>
 
 <style>

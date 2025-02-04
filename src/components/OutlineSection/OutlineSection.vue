@@ -1,13 +1,12 @@
 <template>
   <section ref="section" id="outline-section">
-    <OutlineMarkdown />
+    <slot />
   </section>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 import useSectionObserver from "../../composables/useSectionObserver";
-import OutlineMarkdown from "../../docs/OutlineMarkdown.md"
 
 const section = ref(null);
 
@@ -34,7 +33,7 @@ useSectionObserver({ section, sectionEmit: emit });
   }
 
   p {
-    grid-column: 2/3
+    grid-column: 2/3;
   }
 
   a {
@@ -46,7 +45,7 @@ useSectionObserver({ section, sectionEmit: emit });
   }
 
   a:visited {
-    color: var(--paper-error)
+    color: var(--paper-error);
   }
 
   @media (max-width: 600px) {
