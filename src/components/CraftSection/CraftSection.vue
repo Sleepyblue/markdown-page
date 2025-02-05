@@ -145,8 +145,8 @@ const onSearch = () => {
   }
 
   const { matches, noMatch } = permissiveSearch(searchTerm.value);
-  const uniqueSkills = new Set([...foundSkills.value, ...matches]);
-  const uniqueNotFoundSkills = new Set([...notFoundSkills.value, ...noMatch]);
+  const uniqueSkills = new Set([...matches, ...foundSkills.value]);
+  const uniqueNotFoundSkills = new Set([...noMatch, ...notFoundSkills.value]);
   foundSkills.value = Array.from(uniqueSkills);
   notFoundSkills.value = Array.from(uniqueNotFoundSkills);
 
