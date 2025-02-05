@@ -247,13 +247,14 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         position: absolute;
         right: 0;
         bottom: 100%;
-        text-align: right;
-        color: var(--paper-error);
-        font-family: var(--font-type-header);
-        font-size: clamp(1.2rem, 1.5vw, 1.4rem);
 
         p {
           grid-column: 1 / -1;
+          text-align: right;
+          color: var(--paper-error);
+          font-family: var(--font-type-header);
+          font-size: clamp(1.2rem, 1.5vw, 1.4rem);
+
 
           @media (max-width: 768px) {
             grid-column: 2 / 3;
