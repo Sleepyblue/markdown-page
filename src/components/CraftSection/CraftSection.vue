@@ -2,7 +2,10 @@
   <section ref="section" id="craft-section">
     <h2 id="craft">## Craft</h2>
     <div class="skills">
-      <p>Quickly check if I know</p>
+      <p>Search for a skill to see if it’s in my toolbox. Projects just below, some well-kept, some have cobwebs - all
+        part of the
+        journey.
+      </p>
       <div class="skills-input">
         <label>
           <span aria-hidden="true">$&nbsp;</span>
@@ -169,6 +172,12 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
     display: grid;
     grid-template-columns: 0.3fr 0.7fr;
     max-width: 100%;
+    column-gap: 64px;
+    align-items: baseline;
+
+    p {
+      grid-row: 1 / 3;
+    }
 
     @media (max-width: 768px) {
       display: flex;
@@ -193,6 +202,8 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       grid-row: 1/ 2;
       gap: 1rem;
       padding: 0 1rem;
+      height: max-content;
+      width: 100%;
 
       span {
         position: relative;
@@ -248,17 +259,20 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         right: 0;
         bottom: 100%;
 
+        @media (max-width: 768px) {
+          right: 58px;
+          bottom: 65%;
+          background: var(--paper-background);
+        }
+
         p {
           grid-column: 1 / -1;
           text-align: right;
           color: var(--paper-error);
           font-family: var(--font-type-header);
           font-size: clamp(1.2rem, 1.5vw, 1.4rem);
-
-
-          @media (max-width: 768px) {
-            grid-column: 2 / 3;
-          }
+          padding: 0.2rem 0.4rem;
+          text-wrap: nowrap;
         }
       }
 
@@ -289,6 +303,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       padding: 2rem;
       max-height: 600px;
       overflow: scroll;
+      width: 100%;
 
       ul {
         display: flex;
@@ -308,6 +323,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
           justify-content: space-between;
           gap: 24px;
           padding-left: 6px;
+          font-size: clamp(1.2rem, 1.5vw, 1.4rem);
         }
 
         li span {
