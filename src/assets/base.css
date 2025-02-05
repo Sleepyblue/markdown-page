@@ -167,6 +167,10 @@ a {
   color: var(--paper-text);
 }
 
+strong {
+  font-weight: 700;
+}
+
 button {
   background: none;
   border: none;

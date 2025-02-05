@@ -382,16 +382,16 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
 
     details {
       counter-increment: item;
-      border-top: 1px dashed var(--paper-text);
+      border-top: 1px solid var(--paper-text);
       padding: 2rem 0;
 
       &:last-child {
-        border-bottom: 1px dashed var(--paper-text);
+        border-bottom: 1px solid var(--paper-text);
       }
 
       summary {
         display: grid;
-        grid-template-columns: 0.3fr 0.7fr;
+        grid-template-columns: 0.25fr 0.7fr 0.05fr;
         align-items: end;
         column-gap: clamp(2rem, 5vw + 1rem, 6rem);
         cursor: pointer;
@@ -403,9 +403,9 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         }
 
         @media (max-width: 600px) {
-          display: flex;
-          flex-direction: column;
-          gap: 2rem;
+          grid-template-columns: 0.9fr 0.1fr;
+          column-gap: unset;
+          row-gap: 2rem;
         }
       }
 
@@ -420,13 +420,38 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         line-height: 1;
         font-weight: 200;
         max-width: max-content;
+        align-self: start;
       }
+
+      summary::after {
+        content: "+";
+        justify-self: end;
+        line-height: 0.6;
+        font-weight: 200;
+        font-size: var(--font-size-before);
+        align-self: start;
+
+        @media (max-width: 600px) {
+          grid-column: 2 / 3;
+          grid-row: 1 / 2;
+        }
+      }
+
+      &[open] summary::after {
+        content: "-";
+      }
+
 
       summary span {
         position: relative;
         max-width: max-content;
         line-height: 1;
         font-weight: 200;
+        align-self: start;
+
+        @media (max-width: 600px) {
+          grid-column: 1 / 3;
+        }
 
         &:hover,
         &:focus {
@@ -471,7 +496,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
 
       div {
         display: grid;
-        grid-template-columns: 0.3fr 0.7fr;
+        grid-template-columns: 0.25fr 0.7fr 0.05fr;
         align-items: start;
         padding: 0 2rem;
         column-gap: clamp(2rem, 5vw + 1rem, 6rem);
@@ -509,6 +534,18 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
             grid-column: unset;
           }
         }
+
+        a {
+          text-decoration-style: dashed;
+        }
+
+        a:hover {
+          text-decoration-style: solid;
+        }
+
+        a:visited {
+          color: var(--paper-error);
+        }
       }
     }
 
@@ -516,6 +553,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       padding-bottom: 2rem;
 
       &::before,
+      &::after,
       span {
         font-weight: 500;
       }
