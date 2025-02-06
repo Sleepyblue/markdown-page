@@ -432,8 +432,10 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         font-weight: 200;
         font-size: var(--font-size-before);
         align-self: start;
+      }
 
-        @media (max-width: 600px) {
+      @media (max-width: 600px) {
+        summary::after {
           grid-column: 2 / 3;
           grid-row: 1 / 2;
         }
