@@ -1,5 +1,5 @@
 <template>
-  <header @click="handleClickOutside" ref="header">
+  <header ref="header">
     <div class="action-buttons">
       <button @click.stop="handleClick">
         {{ drawerOpen ? "Close" : "Menu" }}
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 
 const drawerOpen = ref(false);
 const header = ref<HTMLElement | null>(null)
@@ -54,6 +54,12 @@ onMounted(() => {
     "(prefers-color-scheme: light)",
   ).matches;
   selectedTheme.value = prefersLightTheme ? "light" : "dark";
+
+  document.addEventListener('touchstart', handleTouchOutside);
+});
+
+onUnmounted(() => {
+  document.removeEventListener('touchstart', handleTouchOutside);
 });
 
 const handlePageTheme = (theme: "light" | "dark") => {
@@ -78,16 +84,20 @@ const handleClick = () => {
   drawerOpen.value = !drawerOpen.value;
 };
 
-const handleClickOutside = (event: MouseEvent) => {
+const handleTouchOutside = (event: TouchEvent) => {
+  if (!event.changedTouches.length) return;
+
+  const touch = event.touches[0];
+
   const headerContainer = header.value?.getBoundingClientRect();
 
   if (!headerContainer) return;
 
   const isInHeader =
-    event.clientX >= headerContainer.left &&
-    event.clientX <= headerContainer.right &&
-    event.clientY >= headerContainer.top &&
-    event.clientY <= headerContainer.bottom;
+    touch.clientX >= headerContainer.left &&
+    touch.clientX <= headerContainer.right &&
+    touch.clientY >= headerContainer.top &&
+    touch.clientY <= headerContainer.bottom;
 
   if (!isInHeader) {
     drawerOpen.value = false;
