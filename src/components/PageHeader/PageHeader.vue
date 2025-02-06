@@ -162,8 +162,12 @@ header {
     content: "+";
     transform: translateY(50%);
     bottom: 0px;
+  }
 
-    @media (max-width: 600px) {
+  @media (max-width: 600px) {
+
+    &::before,
+    &::after {
       bottom: unset;
       top: 0;
       transform: translateY(-50%);

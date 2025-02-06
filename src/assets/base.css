@@ -203,8 +203,10 @@ button::after {
 button:hover::before {
   left: -10px;
   opacity: 1;
+}
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
+  button:hover::before {
     left: -8px;
   }
 }
@@ -212,8 +214,10 @@ button:hover::before {
 button:hover::after {
   right: -10px;
   opacity: 1;
+}
 
-  @media (max-width: 1024px) {
+@media (max-width: 1024px) {
+  button:hover::after {
     right: -8px;
   }
 }

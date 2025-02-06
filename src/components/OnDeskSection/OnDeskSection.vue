@@ -97,12 +97,15 @@ onMounted(() => {
         background-size: 4px 4px;
         box-shadow: 0 0 0 0.4rem inset var(--paper-background);
         animation: indeterminate 1.6s linear alternate infinite;
+      }
 
-        @media (max-width: 768px) {
+      @media (max-width: 768px) {
+        li:has(progress:indeterminate)::before {
           top: 7px;
           height: 16px;
         }
       }
+
 
       & p:first-of-type {
         display: flex;
