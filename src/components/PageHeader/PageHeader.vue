@@ -208,10 +208,11 @@ header {
     list-style: none;
 
     @media screen and (max-width: 1024px) {
-      gap: 16px;
+      gap: 24px;
     }
 
     @media (max-width: 600px) {
+      gap: 16px;
       flex-direction: column;
     }
   }
