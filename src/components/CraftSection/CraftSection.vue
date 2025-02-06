@@ -410,7 +410,8 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       }
 
       /* Lacks some customization options */
-      summary::marker {
+      summary::marker,
+      summary::-webkit-details-marker {
         display: none;
       }
 
