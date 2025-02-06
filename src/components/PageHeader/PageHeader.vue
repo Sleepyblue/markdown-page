@@ -1,10 +1,10 @@
 <template>
-  <header>
+  <header @click="handleClickOutside" ref="header">
     <div class="action-buttons">
-      <button @click="handleClick">
+      <button @click.stop="handleClick">
         {{ drawerOpen ? "Close" : "Menu" }}
       </button>
-      <button v-if="showScrollToTop" @click="scrollToTop" aria-label="Scroll to the top">
+      <button v-if="showScrollToTop" @click.stop="scrollToTop" aria-label="Scroll to the top">
         Top
       </button>
     </div>
@@ -32,14 +32,14 @@
 import { computed, onMounted, ref } from "vue";
 
 const drawerOpen = ref(false);
+const header = ref<HTMLElement | null>(null)
+const selectedTheme = ref("");
 
 const props = defineProps<{
   currentSection: string | null;
   showScrollToTop: boolean;
   intersectionRatio: number | null;
 }>();
-
-const selectedTheme = ref("");
 
 const activeSection = computed(() =>
   props.currentSection?.replace("-section", ""),
@@ -77,6 +77,22 @@ const scrollToTop = () => {
 const handleClick = () => {
   drawerOpen.value = !drawerOpen.value;
 };
+
+const handleClickOutside = (event: MouseEvent) => {
+  const headerContainer = header.value?.getBoundingClientRect();
+
+  if (!headerContainer) return;
+
+  const isInHeader =
+    event.clientX >= headerContainer.left &&
+    event.clientX <= headerContainer.right &&
+    event.clientY >= headerContainer.top &&
+    event.clientY <= headerContainer.bottom;
+
+  if (!isInHeader) {
+    drawerOpen.value = false;
+  }
+}
 
 const translatePercentage = computed(() => {
   if (!props.intersectionRatio) return "0%";
