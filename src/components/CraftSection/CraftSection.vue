@@ -171,6 +171,7 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
   .skills {
     display: grid;
     grid-template-columns: 0.3fr 0.7fr;
+    grid-template-rows: min-content 1fr;
     max-width: 100%;
     column-gap: 64px;
     align-items: baseline;
