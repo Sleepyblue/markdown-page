@@ -175,7 +175,14 @@ onMounted(() => {
     }
 
     &::-webkit-progress-bar {
-      background: var(--paper-background);
+      background: transparent;
+    }
+
+    &:not(:indeterminate)::-webkit-progress-value {
+      background-image: radial-gradient(var(--paper-text) 0.5px,
+          var(--paper-background) 0.5px);
+      background-size: 4px 4px;
+      box-shadow: 0 0 0 0.3rem inset var(--paper-background);
     }
 
     &:not(:indeterminate)::-moz-progress-bar {
@@ -186,23 +193,11 @@ onMounted(() => {
       box-shadow: 0 0 0 0.3rem inset var(--paper-background);
     }
 
-    &:not(:indeterminate)::-webkit-progress-value {
-      background-image: radial-gradient(var(--paper-text) 0.5px,
-          var(--paper-background) 0.5px);
-      background-size: 4px 4px;
-      box-shadow: 0 0 0 0.3rem inset var(--paper-background);
-    }
-
     &:indeterminate {
       background: transparent;
     }
 
-
     &:indeterminate::-moz-progress-bar {
-      background: transparent;
-    }
-
-    &:indeterminate::-moz-progress-value {
       background: transparent;
     }
   }
