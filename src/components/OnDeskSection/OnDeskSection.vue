@@ -17,7 +17,7 @@ const emit = defineEmits<{
 useSectionObserver({ section, sectionEmit: emit });
 
 onMounted(() => {
-  const progressBars = section.value?.querySelectorAll("progress");
+  const progressBars = section.value?.querySelectorAll("progress:not(:indeterminate)") as NodeListOf<HTMLProgressElement>;
 
   if (!progressBars) return;
 
@@ -71,7 +71,6 @@ onMounted(() => {
       flex-direction: column;
       gap: 4px;
       max-width: 320px;
-      transition: all 3s ease;
 
       li {
         position: relative;
@@ -85,6 +84,24 @@ onMounted(() => {
         font-weight: 500;
         font-size: 1.4rem;
         z-index: 2;
+      }
+
+      li:has(progress:indeterminate)::before {
+        content: "\00a0";
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        width: 50%;
+        background-image: radial-gradient(var(--paper-text) 0.5px,
+            var(--paper-background) 0.5px);
+        background-size: 4px 4px;
+        box-shadow: 0 0 0 0.4rem inset var(--paper-background);
+        animation: indeterminate 1.6s linear alternate infinite;
+
+        @media (max-width: 768px) {
+          top: 7px;
+          height: 16px;
+        }
       }
 
       & p:first-of-type {
@@ -157,24 +174,47 @@ onMounted(() => {
       height: 16px;
     }
 
-    &::-moz-progress-bar {
-      background: var(--paper-background);
-      background-image: radial-gradient(var(--paper-text) 0.5px,
-          var(--paper-background) 0.5px);
-      background-size: 4px 4px;
-      box-shadow: 0 0 0 0.3rem inset var(--paper-background);
-    }
-
     &::-webkit-progress-bar {
       background: var(--paper-background);
     }
 
-    &::-webkit-progress-value {
+    &:not(:indeterminate)::-moz-progress-bar {
+      background: var(--paper-background);
       background-image: radial-gradient(var(--paper-text) 0.5px,
           var(--paper-background) 0.5px);
       background-size: 4px 4px;
       box-shadow: 0 0 0 0.3rem inset var(--paper-background);
     }
+
+    &:not(:indeterminate)::-webkit-progress-value {
+      background-image: radial-gradient(var(--paper-text) 0.5px,
+          var(--paper-background) 0.5px);
+      background-size: 4px 4px;
+      box-shadow: 0 0 0 0.3rem inset var(--paper-background);
+    }
+
+    &:indeterminate {
+      background: transparent;
+    }
+
+
+    &:indeterminate::-moz-progress-bar {
+      background: transparent;
+    }
+
+    &:indeterminate::-moz-progress-value {
+      background: transparent;
+    }
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(98%);
   }
 }
 </style>
