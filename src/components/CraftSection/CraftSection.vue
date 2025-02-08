@@ -393,13 +393,13 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
       summary {
         display: grid;
         grid-template-columns: 0.25fr 0.7fr 0.05fr;
-        align-items: end;
+        align-items: center;
         column-gap: clamp(2rem, 5vw + 1rem, 6rem);
         cursor: pointer;
         font-size: var(--font-size-h2);
         font-weight: 200;
 
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
           align-items: start;
         }
 
@@ -431,7 +431,6 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         line-height: 0.6;
         font-weight: 200;
         font-size: var(--font-size-before);
-        align-self: start;
       }
 
       @media (max-width: 600px) {
@@ -451,7 +450,6 @@ const removeSkill = (index: number, type: "found" | "not-found") => {
         max-width: max-content;
         line-height: 1;
         font-weight: 200;
-        align-self: start;
 
         @media (max-width: 600px) {
           grid-column: 1 / 3;
