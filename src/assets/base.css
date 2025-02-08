@@ -11,7 +11,7 @@
   --font-size-before: clamp(5.4rem, 4vw + 1.5rem, 6.4rem);
   --font-size-h2: clamp(3.2rem, 4.5vw + 1rem, 4.8rem);
   --font-size-h3: clamp(2.4rem, 3vw + 0.5rem, 3.6rem);
-  --font-size-body: clamp(1.4rem, 1.5vw, 2.2rem);
+  --font-size-body: clamp(1.6rem, 1.5vw, 2.2rem);
   --font-size-description: clamp(1.6rem, 2.5vw, 3.6rem);
   --font-size-pre: clamp(2rem, 4vw + 0.8rem, 3.6rem);
   --font-type-header: "Fira Sans", sans-serif;
