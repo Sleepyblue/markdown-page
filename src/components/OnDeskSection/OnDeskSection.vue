@@ -86,6 +86,17 @@ onMounted(() => {
         z-index: 2;
       }
 
+      li:has(progress:indeterminate)::after {
+        content: "Queued™";
+        position: absolute;
+        right: 6px;
+        bottom: 0;
+        font-weight: 500;
+        font-size: 1.4rem;
+        z-index: 2;
+
+      }
+
       li:has(progress:indeterminate)::before {
         content: "\00a0";
         position: absolute;
