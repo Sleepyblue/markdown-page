@@ -97,7 +97,7 @@ const permissiveSearch = (input: string) => {
   }
 
   let matches = skillsList.value.filter(({ skill }) =>
-    normalizeString(skill).startsWith(normalizedInput),
+    normalizeString(skill).includes(normalizedInput),
   );
 
   if (matches.length > 0) {
