@@ -1,8 +1,48 @@
-# The why
+## The why
 
 Updating my personal page always felt like a hassle, so I tried to make it easier.
 
 This project turns `Markdown` files into a personal site with minimal effort. No manual HTML updates or overcomplicated CMS - just local `markdown` (straight from my Obsidian vault, but any source works), a script to fetch and process it, and the site builds itself using `Vue` and `unplugin-vue-markdown`. Clean, simple, and (I hope!) maintainable.
+
+## Markdown examples
+
+Below is the structure for some sections of my page. I've kept things simple and easy to update while ensuring clarity for both content and future edits.
+
+### Outline section example
+
+```md
+## ## Outline {#outline}
+
+### Still Sketching
+
+A bit of an intro about yourself.
+
+### In the margins
+
+A section for contacts or personal interests, hobbies, and other things you enjoy doing in your free time or that define who you are.
+```
+
+### Craft section example
+
+```md
+- Skill 1
+- Skill 2
+- Skill 3
+- Skill 4
+- Etc...
+
+::: details Markdown Page
+
+- #Skill1
+- #Skill2
+- #Skill3
+- Etc...
+
+[Github link](some-link){target="\_blank" rel="noopener noreferrer"}
+
+A brief description about the project and/or skill.
+:::
+```
 
 ## Insights gained
 
