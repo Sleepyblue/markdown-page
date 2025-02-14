@@ -40,3 +40,14 @@ I used the CSS `counter` property to automatically number the details cards, whi
 ### Form validation
 
 I worked mostly with native HTML5 form validation, using properties like `minlength`, `pattern`, and pseudo-classes like `:invalid` and `:valid`. These helped handle the basic validation without needing extra JavaScript. The only time I used JavaScript was for `setCustomValidity()` when the input was empty, as the default validation wouldn’t trigger an error for that case. It was interesting to see how HTML5’s native form validation features continue to improve, making form validation a bit less tricky.
+
+## Smarter, but Not Fuzzy: A (more) Practical Search Approach
+
+Not a fuzzy search, just a slightly more flexible way to match skills by normalizing input and checking against skill names. Here’s the logic:
+
+1. _Cleans up input_: Lowercases, removes non-alphabetic chars, numbers, and trims "js"/"ts" suffixes with regex. No weird edge cases allowed.
+2. _Finds matches_: Uses `includes` to catch terms anywhere in the skill name.
+3. _Trims the fat_: Prioritizes shorter matches and only keeps the shortest ones. This avoids searching for `react` and getting an overloaded list like `React/React Query/React Router`, ensuring the simplest match is returned first.
+4. _Handles no matches_: If nothing fits, the input goes into a `noMatch` array.
+
+For real fuzzy search, I could’ve used a library or implemented _Damerau-Levenshtein_ (or some other fancy algorithm), but for a simple project like this, keeping it lightweight and to the point just made more sense.
