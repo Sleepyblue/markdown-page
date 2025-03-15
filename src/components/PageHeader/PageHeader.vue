@@ -214,11 +214,11 @@ header {
       }
 
       &:hover::before {
-        left: -6px;
+        left: -4px;
       }
 
       &:hover::after {
-        right: -6px;
+        right: -4px;
       }
     }
 
